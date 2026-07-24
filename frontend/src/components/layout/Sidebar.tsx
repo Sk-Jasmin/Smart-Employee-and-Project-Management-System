@@ -30,6 +30,7 @@ export const EmployeeSidebar: React.FC<{ unreadNotificationCount?: number }> = (
     { path: '/', label: 'Dashboard', icon: <LayoutGrid className="w-4 h-4" /> },
     { path: '/projects', label: 'Projects', icon: <Briefcase className="w-4 h-4" /> },
     { path: '/tasks', label: 'Tasks', icon: <CheckSquare className="w-4 h-4" /> },
+    { path: '/reports', label: 'Reports', icon: <BarChart2 className="w-4 h-4" /> },
     { 
       path: '/notifications', 
       label: 'Notifications', 
@@ -105,12 +106,12 @@ export const AdminSidebar: React.FC<{ pendingLeaveCount?: number; unreadNotifica
     { path: '/tasks', label: 'Tasks', icon: <CheckSquare className="w-4 h-4" /> },
     { 
       path: '/attendance', 
-      label: 'Attendance & Leaves', 
+      label: 'Attendance', 
       icon: <Calendar className="w-4 h-4" />,
       badge: pendingLeaveCount > 0 ? pendingLeaveCount : undefined,
       badgeColor: 'bg-emerald-500 text-slate-950 font-extrabold dark:bg-slate-900 dark:text-emerald-300 dark:border dark:border-emerald-800'
     },
-    { path: '/reports', label: 'Reports & Audit Logs', icon: <BarChart2 className="w-4 h-4" /> },
+    { path: '/reports', label: 'Audit Logs', icon: <BarChart2 className="w-4 h-4" /> },
     { 
       path: '/notifications', 
       label: 'Notifications', 

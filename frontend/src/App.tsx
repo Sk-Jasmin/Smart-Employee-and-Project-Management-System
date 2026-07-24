@@ -45,7 +45,6 @@ import { SettingsPage } from './pages/SettingsPage';
 import { AuditLogsPage } from './pages/AuditLogsPage';
 import { SwaggerView } from './components/SwaggerView';
 import { CodeExplorerView } from './components/CodeExplorerView';
-import { PersonalNotesDrawer } from './components/ui/PersonalNotesDrawer';
 import { authService } from './services/authService';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -67,7 +66,19 @@ export default function App() {
   // Core Data Collections with localStorage persistence
   const [employees, setEmployees] = useState<Employee[]>(() => {
     const saved = localStorage.getItem('smartcorp_employees');
-    return saved ? JSON.parse(saved) : INITIAL_EMPLOYEES;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 20) {
+          localStorage.setItem('smartcorp_employees', JSON.stringify(INITIAL_EMPLOYEES.slice(0, 20)));
+          return INITIAL_EMPLOYEES.slice(0, 20);
+        }
+        return parsed;
+      } catch {
+        // fallback
+      }
+    }
+    return INITIAL_EMPLOYEES.slice(0, 20);
   });
   const [projects, setProjects] = useState<Project[]>(() => {
     const saved = localStorage.getItem('smartcorp_projects');
@@ -75,7 +86,19 @@ export default function App() {
   });
   const [tasks, setTasks] = useState<TaskItem[]>(() => {
     const saved = localStorage.getItem('smartcorp_tasks');
-    return saved ? JSON.parse(saved) : INITIAL_TASKS;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 10) {
+          localStorage.setItem('smartcorp_tasks', JSON.stringify(INITIAL_TASKS.slice(0, 10)));
+          return INITIAL_TASKS.slice(0, 10);
+        }
+        return parsed;
+      } catch {
+        // fallback
+      }
+    }
+    return INITIAL_TASKS.slice(0, 10);
   });
   const [attendance, setAttendance] = useState<AttendanceRecord[]>(() => {
     const saved = localStorage.getItem('smartcorp_attendance');
@@ -346,8 +369,10 @@ export default function App() {
               <Route
                 path="/reports"
                 element={
-                  <ProtectedRoute isAuthenticated={isAuthenticated} userRole={currentRole} allowedRoles={['ADMIN', 'MANAGER']}>
+                  <ProtectedRoute isAuthenticated={isAuthenticated} userRole={currentRole}>
                     <ReportsPage
+                      currentRole={currentRole}
+                      currentUser={currentUser}
                       employees={employees}
                       projects={projects}
                       tasks={tasks}
@@ -419,10 +444,6 @@ export default function App() {
             </Routes>
           </main>
         </div>
-
-        {/* Global Personal Notes Drawer */}
-        {isAuthenticated && <PersonalNotesDrawer />}
-
       </div>
     </BrowserRouter>
   );

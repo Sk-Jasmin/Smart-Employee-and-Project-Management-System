@@ -45,12 +45,17 @@ export const DashboardPage: React.FC<DashboardProps> = ({
   const presentCount = attendance.filter(a => a.status === 'PRESENT' || a.status === 'LATE').length;
   const attendanceRate = totalEmployees > 0 ? Math.round((presentCount / totalEmployees) * 100) : 100;
 
-  // Chart Data
-  const projectProgressData = projects.map(p => ({
-    name: p.name.length > 15 ? p.name.substring(0, 15) + '...' : p.name,
-    Budget: p.budget / 100000,
-    Progress: p.status === 'COMPLETED' ? 100 : p.status === 'IN_PROGRESS' ? 65 : 20
-  }));
+  // Chart Data - Project Task Milestone Breakdown
+  const projectProgressData = projects.map(p => {
+    const projTasks = tasks.filter(t => t.projectId === p.id);
+    const completed = projTasks.filter(t => t.status === 'DONE').length;
+    const pending = projTasks.length - completed;
+    return {
+      name: p.name.length > 15 ? p.name.substring(0, 15) + '...' : p.name,
+      Completed: completed,
+      Pending: pending
+    };
+  });
 
   const taskStatusData = [
     { name: 'To Do', value: tasks.filter(t => t.status === 'TODO').length },
@@ -212,15 +217,15 @@ export const DashboardPage: React.FC<DashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2">
           <CardHeader action={<Button size="sm" variant="outline" onClick={() => navigate('/projects')}>View Projects</Button>}>
-            Project Budget (₹ Lacs) & Progress Overview
+            Project Task Distribution & Sprint Milestones
           </CardHeader>
           <CardBody>
             <CorporateBarChart
               data={projectProgressData}
               xKey="name"
               bars={[
-                { key: 'Budget', name: 'Budget (₹ Lacs)', color: '#1d4ed8' },
-                { key: 'Progress', name: 'Progress (%)', color: '#15803d' }
+                { key: 'Completed', name: 'Completed Tasks', color: '#10b981' },
+                { key: 'Pending', name: 'Pending / In Progress', color: '#6366f1' }
               ]}
             />
           </CardBody>

@@ -156,13 +156,15 @@ export const AttendanceView: React.FC<AttendanceViewProps> = ({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {attendance.map((rec) => (
-                  <tr key={rec.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50">
-                    <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{rec.employeeName}</td>
-                    <td className="px-4 py-3 font-mono text-slate-500">{rec.date}</td>
-                    <td className="px-4 py-3 font-medium text-emerald-600 dark:text-emerald-400">{rec.checkIn}</td>
-                    <td className="px-4 py-3 font-medium text-rose-600 dark:text-rose-400">{rec.checkOut}</td>
-                    <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{rec.workHours} hrs</td>
+                {attendance.map((rec) => {
+                  const empName = rec.employeeName || employees.find(e => e.id === rec.employeeId)?.firstName + ' ' + (employees.find(e => e.id === rec.employeeId)?.lastName || '') || `Employee #${rec.employeeId}`;
+                  return (
+                    <tr key={rec.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50">
+                      <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{empName}</td>
+                      <td className="px-4 py-3 font-mono text-slate-500">{rec.date}</td>
+                      <td className="px-4 py-3 font-medium text-emerald-600 dark:text-emerald-400">{rec.checkIn}</td>
+                      <td className="px-4 py-3 font-medium text-rose-600 dark:text-rose-400">{rec.checkOut}</td>
+                      <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{rec.workHours || 8} hrs</td>
                     <td className="px-4 py-3">
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
                         rec.status === 'PRESENT' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' :

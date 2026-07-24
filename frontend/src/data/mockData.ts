@@ -348,6 +348,92 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     achievements: [
       { id: 21, title: 'AI Telemetry Pioneer 🤖', badge: 'AI', note: 'Built real-time telemetry model detecting project bottlenecks.' }
     ]
+  },
+  {
+    id: 16,
+    employeeCode: 'EMP-116',
+    firstName: 'Preeti',
+    lastName: 'Sharma',
+    email: 'preeti.sharma@smartcorp.in',
+    phone: '+91 84321 09876',
+    department: 'Engineering',
+    designation: 'Cybersecurity & Application Security Lead',
+    salary: 1980000,
+    dateOfBirth: '1991-11-04',
+    joiningDate: '2022-03-01',
+    address: '14 Whitefield Main Rd, Bengaluru, Karnataka',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 28, name: 'Certified Information Systems Security Professional (CISSP)', issuer: '(ISC)²', issueDate: '2023-01-15', credentialId: 'CISSP-88120' }
+    ],
+    achievements: [
+      { id: 22, title: 'Zero-Trust Champion 🔐', badge: 'SECURITY', note: 'Implemented end-to-end TLS and OAuth2 verification.' }
+    ]
+  },
+  {
+    id: 17,
+    employeeCode: 'EMP-117',
+    firstName: 'Rajesh',
+    lastName: 'Nair',
+    email: 'rajesh.nair@smartcorp.in',
+    phone: '+91 83210 98765',
+    department: 'Engineering',
+    designation: 'Senior Full Stack Specialist (Node/React)',
+    salary: 1800000,
+    dateOfBirth: '1993-08-19',
+    joiningDate: '2021-10-15',
+    address: '88 Panampilly Nagar, Kochi, Kerala',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 18,
+    employeeCode: 'EMP-118',
+    firstName: 'Meera',
+    lastName: 'Joshi',
+    email: 'meera.joshi@smartcorp.in',
+    phone: '+91 82109 87654',
+    department: 'Product',
+    designation: 'Senior UX Research Analyst',
+    salary: 1620000,
+    dateOfBirth: '1995-02-14',
+    joiningDate: '2023-01-10',
+    address: '202 Viman Nagar, Pune, Maharashtra',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 19,
+    employeeCode: 'EMP-119',
+    firstName: 'Vikram',
+    lastName: 'Choudhury',
+    email: 'vikram.choudhury@smartcorp.in',
+    phone: '+91 81098 76543',
+    department: 'Finance',
+    designation: 'Senior Financial Controller & Analyst',
+    salary: 1950000,
+    dateOfBirth: '1989-12-01',
+    joiningDate: '2020-04-01',
+    address: '45 Salt Lake Sector V, Kolkata, West Bengal',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    id: 20,
+    employeeCode: 'EMP-120',
+    firstName: 'Swati',
+    lastName: 'Menon',
+    email: 'swati.menon@smartcorp.in',
+    phone: '+91 80987 65432',
+    department: 'Operations',
+    designation: 'Lead Supply Chain & Logistics Coordinator',
+    salary: 1720000,
+    dateOfBirth: '1992-06-18',
+    joiningDate: '2021-05-10',
+    address: '12 MG Road, Thiruvananthapuram, Kerala',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80'
   }
 ];
 
@@ -399,14 +485,13 @@ export const INITIAL_PROJECTS: Project[] = [
 ];
 
 export const INITIAL_TASKS: TaskItem[] = [
-  // Project 1: Core Spring Boot Microservices Modernization
   {
     id: 101,
     projectId: 1,
     title: 'Sprint Microservices Security OAuth2 Integration',
     description: 'Implement JWT Token verification filter and Spring Security role-based access control annotations.',
     assignedEmployeeId: 1,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
+    assignedBy: 'Karthik Sundaram (Admin)',
     priority: 'URGENT',
     status: 'IN_PROGRESS',
     progressPercentage: 85,
@@ -427,60 +512,6 @@ export const INITIAL_TASKS: TaskItem[] = [
     remarks: 'Dark mode contrast verified across all viewport breakpoints.'
   },
   {
-    id: 105,
-    projectId: 1,
-    title: 'Hibernate ORM Entity & Audit Mapping Refactoring',
-    description: 'Optimize JPA entity relationships and enable auditing annotations for automatic timestamp tracking.',
-    assignedEmployeeId: 1,
-    assignedBy: 'Karthik Sundaram (Admin)',
-    priority: 'MEDIUM',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-07-20',
-    remarks: 'JPA repository performance tests passed cleanly.'
-  },
-  {
-    id: 106,
-    projectId: 1,
-    title: 'Spring Boot Actuator Health Telemetry Endpoint',
-    description: 'Expose Prometheus metrics endpoints for container CPU and JVM memory monitoring.',
-    assignedEmployeeId: 2,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'HIGH',
-    status: 'REVIEW',
-    progressPercentage: 90,
-    deadline: '2026-08-02',
-    remarks: 'PR opened and waiting for peer security review.'
-  },
-  {
-    id: 107,
-    projectId: 1,
-    title: 'Microservices Integration & Stress Testing',
-    description: 'Execute load testing using Apache JMeter for 10,000 concurrent API requests.',
-    assignedEmployeeId: 6,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'MEDIUM',
-    status: 'TODO',
-    progressPercentage: 0,
-    deadline: '2026-08-15',
-    remarks: 'Test scripts created; pending staging environment deployment.'
-  },
-  {
-    id: 117,
-    projectId: 1,
-    title: 'Redis Session Cache Cluster Integration',
-    description: 'Configure Spring Data Redis cache manager to store active user JWT session states with 30-min TTL.',
-    assignedEmployeeId: 1,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'HIGH',
-    status: 'IN_PROGRESS',
-    progressPercentage: 50,
-    deadline: '2026-08-20',
-    remarks: 'Redis Sentinel master-replica cluster configured in Docker.'
-  },
-
-  // Project 2: AWS Cloud Aurora DB & Kafka Infrastructure
-  {
     id: 103,
     projectId: 2,
     title: 'AWS Aurora DB Replication Pipeline Setup',
@@ -493,60 +524,6 @@ export const INITIAL_TASKS: TaskItem[] = [
     deadline: '2026-08-05',
     remarks: 'Replication latency under 20ms.'
   },
-  {
-    id: 108,
-    projectId: 2,
-    title: 'Kafka Event Producer & Consumer Schema Registry',
-    description: 'Set up Confluent Schema Registry for JSON and Avro payload validation across topics.',
-    assignedEmployeeId: 2,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'HIGH',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-07-22',
-    remarks: 'Producer & Consumer event listeners successfully tested.'
-  },
-  {
-    id: 109,
-    projectId: 2,
-    title: 'Multi-Region Disaster Recovery Failover Simulation',
-    description: 'Simulate region outage and verify automated failover to standby AWS Aurora cluster.',
-    assignedEmployeeId: 12,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'URGENT',
-    status: 'TODO',
-    progressPercentage: 0,
-    deadline: '2026-08-28',
-    remarks: 'Failover runbook documentation in progress.'
-  },
-  {
-    id: 110,
-    projectId: 2,
-    title: 'Terraform Infrastructure as Code Scripts for AWS ECS',
-    description: 'Write modular Terraform definitions for ECS Fargate task definitions and auto-scaling groups.',
-    assignedEmployeeId: 2,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'HIGH',
-    status: 'IN_PROGRESS',
-    progressPercentage: 60,
-    deadline: '2026-08-12',
-    remarks: 'Dev environment modules created; expanding to Staging.'
-  },
-  {
-    id: 118,
-    projectId: 2,
-    title: 'AWS CloudWatch Ingestion & PagerDuty Metric Alarms',
-    description: 'Configure Logstash pipeline to forward Spring Boot JSON app logs to CloudWatch with automated alert triggers.',
-    assignedEmployeeId: 11,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'MEDIUM',
-    status: 'TODO',
-    progressPercentage: 0,
-    deadline: '2026-09-05',
-    remarks: 'Alert threshold rules drafted for memory spikes > 85%.'
-  },
-
-  // Project 3: Mobile HR Biometric App
   {
     id: 104,
     projectId: 3,
@@ -561,74 +538,46 @@ export const INITIAL_TASKS: TaskItem[] = [
     remarks: 'Initial OpenAPI spec drafted in Swagger.'
   },
   {
-    id: 111,
+    id: 105,
+    projectId: 1,
+    title: 'Hibernate ORM Entity & Audit Mapping Refactoring',
+    description: 'Optimize JPA entity relationships and enable auditing annotations for automatic timestamp tracking.',
+    assignedEmployeeId: 1,
+    assignedBy: 'Karthik Sundaram (Admin)',
+    priority: 'MEDIUM',
+    status: 'DONE',
+    progressPercentage: 100,
+    deadline: '2026-07-20',
+    remarks: 'JPA repository performance tests passed cleanly.'
+  },
+  {
+    id: 106,
+    projectId: 2,
+    title: 'Spring Boot Actuator Health Telemetry Endpoint',
+    description: 'Expose Prometheus metrics endpoints for container CPU and JVM memory monitoring.',
+    assignedEmployeeId: 12,
+    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
+    priority: 'HIGH',
+    status: 'REVIEW',
+    progressPercentage: 90,
+    deadline: '2026-08-02',
+    remarks: 'PR opened and waiting for peer security review.'
+  },
+  {
+    id: 107,
     projectId: 3,
     title: 'Biometric Authentication (FaceID & Fingerprint) Interface',
     description: 'Integrate native device biometric prompt APIs for secure passwordless login.',
     assignedEmployeeId: 7,
     assignedBy: 'Ananya Subramanian (Design Lead)',
     priority: 'HIGH',
-    status: 'TODO',
-    progressPercentage: 0,
+    status: 'IN_PROGRESS',
+    progressPercentage: 45,
     deadline: '2026-09-01',
     remarks: 'UI mockups approved by UX team.'
   },
   {
-    id: 112,
-    projectId: 3,
-    title: 'Offline Sync & SQLite Cache Layer for Mobile App',
-    description: 'Implement local offline queue to store check-ins when internet connectivity drops.',
-    assignedEmployeeId: 6,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'MEDIUM',
-    status: 'IN_PROGRESS',
-    progressPercentage: 45,
-    deadline: '2026-08-30',
-    remarks: 'SQLite schema migrations completed.'
-  },
-  {
-    id: 113,
-    projectId: 3,
-    title: 'Mobile App UI Component Library Figma Design Sync',
-    description: 'Design mobile responsive cards, bottom tabs, and interactive touch controls.',
-    assignedEmployeeId: 4,
-    assignedBy: 'Ananya Subramanian (Design Lead)',
-    priority: 'LOW',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-07-15',
-    remarks: 'Figma component tokens exported.'
-  },
-  {
-    id: 119,
-    projectId: 3,
-    title: 'Firebase Push Notifications Gateway for Attendance',
-    description: 'Integrate Firebase Cloud Messaging (FCM) to trigger daily check-in reminders and instant leave approval alerts.',
-    assignedEmployeeId: 3,
-    assignedBy: 'Ananya Subramanian (Design Lead)',
-    priority: 'HIGH',
-    status: 'REVIEW',
-    progressPercentage: 85,
-    deadline: '2026-08-18',
-    remarks: 'FCM payload handler tested on Android & iOS simulators.'
-  },
-
-  // Project 4: AI Executive Telemetry Analytics
-  {
-    id: 114,
-    projectId: 4,
-    title: 'Machine Learning Predictive Risk Analytics Model',
-    description: 'Train telemetry classification model to identify sprint delay risks early.',
-    assignedEmployeeId: 15,
-    assignedBy: 'Karthik Sundaram (Admin)',
-    priority: 'HIGH',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-06-15',
-    remarks: 'Model accuracy benchmarked at 94.2%.'
-  },
-  {
-    id: 115,
+    id: 108,
     projectId: 4,
     title: 'Automated Weekly Executive Email Report Pipeline',
     description: 'Set up cron schedule generator and HTML email renderer for executive summaries.',
@@ -641,153 +590,49 @@ export const INITIAL_TASKS: TaskItem[] = [
     remarks: 'Email templates verified across mobile mail clients.'
   },
   {
-    id: 116,
+    id: 109,
+    projectId: 4,
+    title: 'Machine Learning Predictive Risk Analytics Model',
+    description: 'Train telemetry classification model to identify sprint delay risks early.',
+    assignedEmployeeId: 15,
+    assignedBy: 'Karthik Sundaram (Admin)',
+    priority: 'HIGH',
+    status: 'DONE',
+    progressPercentage: 100,
+    deadline: '2026-06-15',
+    remarks: 'Model accuracy benchmarked at 94.2%.'
+  },
+  {
+    id: 110,
     projectId: 4,
     title: 'Performance Metrics Dashboard & PDF Generator',
     description: 'Implement dynamic POI / PDF report generation for departmental payroll & attendance metrics.',
-    assignedEmployeeId: 1,
-    assignedBy: 'Karthik Sundaram (Admin)',
-    priority: 'HIGH',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-06-28',
-    remarks: 'PDF layout export operational.'
-  },
-  {
-    id: 120,
-    projectId: 4,
-    title: 'Automated Departmental Compensation Anomaly Detector',
-    description: 'Implement statistical outlier detection script to flag salary disparities across engineering roles.',
     assignedEmployeeId: 13,
-    assignedBy: 'Karthik Sundaram (Admin)',
-    priority: 'LOW',
-    status: 'DONE',
-    progressPercentage: 100,
-    deadline: '2026-07-10',
-    remarks: 'Outlier report embedded into Analytics tab.'
-  },
-  {
-    id: 121,
-    projectId: 1,
-    title: 'Spring Boot 3.2 Security Filter & OAuth2 Scope Validator',
-    description: 'Implement granular method-level authorization filters and custom OAuth2 JWT claim validators across microservices.',
-    assignedEmployeeId: 1,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'URGENT',
-    status: 'IN_PROGRESS',
-    progressPercentage: 75,
-    deadline: '2026-08-12',
-    remarks: 'Scope mapping logic complete; writing integration unit tests.'
-  },
-  {
-    id: 122,
-    projectId: 2,
-    title: 'Database Sharding & Connection Pool Tuning (HikariCP)',
-    description: 'Optimize HikariCP connection pool parameters and configure horizontal database sharding for high-concurrency peak loads.',
-    assignedEmployeeId: 2,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'HIGH',
-    status: 'TODO',
-    progressPercentage: 0,
-    deadline: '2026-08-25',
-    remarks: 'Benchmarking environment provisioned; awaiting stress testing scripts.'
-  },
-  {
-    id: 123,
-    projectId: 3,
-    title: 'Mobile Push Notification Center & FCM Token Handler',
-    description: 'Build automated Firebase Cloud Messaging token lifecycle management for real-time leave status and attendance alerts.',
-    assignedEmployeeId: 6,
-    assignedBy: 'Ananya Subramanian (Design Lead)',
-    priority: 'MEDIUM',
-    status: 'IN_PROGRESS',
-    progressPercentage: 60,
-    deadline: '2026-08-18',
-    remarks: 'FCM payload builder implemented and tested on Android emulators.'
-  },
-  {
-    id: 124,
-    projectId: 4,
-    title: 'AI Predictive Attrition Risk Model & Executive Metrics Dashboard',
-    description: 'Develop machine learning telemetry pipeline analyzing employee retention signals and outputting executive risk scores.',
-    assignedEmployeeId: 15,
     assignedBy: 'Karthik Sundaram (Admin)',
     priority: 'HIGH',
     status: 'REVIEW',
     progressPercentage: 90,
-    deadline: '2026-08-05',
-    remarks: 'Model accuracy evaluated at 92.4%; PR open for senior review.'
-  },
-  {
-    id: 125,
-    projectId: 1,
-    title: 'GraphQL API Gateway & Schema Federation',
-    description: 'Construct a centralized GraphQL federated schema layer to stitch microservice queries for employee and project details.',
-    assignedEmployeeId: 7,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'HIGH',
-    status: 'IN_PROGRESS',
-    progressPercentage: 40,
-    deadline: '2026-08-22',
-    remarks: 'Apollo Gateway schema stitching defined; currently validating type resolvers.'
-  },
-  {
-    id: 126,
-    projectId: 2,
-    title: 'Zero-Downtime Data Migration & CDC Pipeline (Debezium)',
-    description: 'Deploy Debezium Change Data Capture (CDC) connector with Kafka to stream real-time database transactions into Aurora PostgreSQL.',
-    assignedEmployeeId: 12,
-    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
-    priority: 'URGENT',
-    status: 'REVIEW',
-    progressPercentage: 80,
-    deadline: '2026-08-14',
-    remarks: 'CDC pipeline streaming validation passed in staging environment.'
-  },
-  {
-    id: 127,
-    projectId: 3,
-    title: 'Offline Encrypted Storage & Keytar Vault Integration',
-    description: 'Implement hardware-backed secure key storage using iOS Keychain and Android Keystore for biometric auth tokens.',
-    assignedEmployeeId: 6,
-    assignedBy: 'Ashwin Ramachandran (Product Lead)',
-    priority: 'HIGH',
-    status: 'TODO',
-    progressPercentage: 15,
-    deadline: '2026-09-10',
-    remarks: 'Security review guidelines incorporated into technical design doc.'
-  },
-  {
-    id: 128,
-    projectId: 4,
-    title: 'LLM-Powered Executive Insight Summarizer',
-    description: 'Integrate lightweight natural language generation model to auto-generate weekly textual executive insights on project milestones.',
-    assignedEmployeeId: 15,
-    assignedBy: 'Karthik Sundaram (Admin)',
-    priority: 'MEDIUM',
-    status: 'IN_PROGRESS',
-    progressPercentage: 65,
-    deadline: '2026-08-18',
-    remarks: 'Prompt template pipeline tested; integrating with PDF export service.'
+    deadline: '2026-06-28',
+    remarks: 'PDF layout export operational.'
   }
 ];
 
 export const INITIAL_ATTENDANCE: AttendanceRecord[] = [
-  { id: 1, employeeId: 1, date: '2026-07-23', checkIn: '09:14 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.5 hrs', overtimeHours: '0.5 hrs' },
-  { id: 2, employeeId: 2, date: '2026-07-23', checkIn: '09:02 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.7 hrs', overtimeHours: '0.0 hrs' },
-  { id: 3, employeeId: 3, date: '2026-07-23', checkIn: '09:45 AM', checkOut: '--:--', status: 'LATE', totalHours: '7.0 hrs', overtimeHours: '0.0 hrs' },
-  { id: 4, employeeId: 4, date: '2026-07-23', checkIn: '08:55 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
-  { id: 5, employeeId: 5, date: '2026-07-23', checkIn: '--:--', checkOut: '--:--', status: 'ON_LEAVE', totalHours: '0 hrs', overtimeHours: '0 hrs' },
-  { id: 6, employeeId: 6, date: '2026-07-23', checkIn: '09:05 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.8 hrs', overtimeHours: '0.0 hrs' },
-  { id: 7, employeeId: 7, date: '2026-07-23', checkIn: '08:50 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.1 hrs', overtimeHours: '0.5 hrs' },
-  { id: 8, employeeId: 8, date: '2026-07-23', checkIn: '09:30 AM', checkOut: '--:--', status: 'LATE', totalHours: '7.2 hrs', overtimeHours: '0.0 hrs' },
-  { id: 9, employeeId: 9, date: '2026-07-23', checkIn: '09:00 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
-  { id: 10, employeeId: 10, date: '2026-07-23', checkIn: '09:10 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.6 hrs', overtimeHours: '0.0 hrs' },
-  { id: 11, employeeId: 11, date: '2026-07-23', checkIn: '08:58 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
-  { id: 12, employeeId: 12, date: '2026-07-23', checkIn: '09:12 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.5 hrs', overtimeHours: '0.0 hrs' },
-  { id: 13, employeeId: 13, date: '2026-07-23', checkIn: '09:00 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.5 hrs' },
-  { id: 14, employeeId: 14, date: '2026-07-23', checkIn: '08:45 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.2 hrs', overtimeHours: '0.5 hrs' },
-  { id: 15, employeeId: 15, date: '2026-07-23', checkIn: '09:03 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.7 hrs', overtimeHours: '0.0 hrs' }
+  { id: 1, employeeId: 1, employeeName: 'Karthik Sundaram', date: '2026-07-23', checkIn: '09:14 AM', checkOut: '05:44 PM', status: 'PRESENT', workHours: 8.5, remarks: 'On time' },
+  { id: 2, employeeId: 2, employeeName: 'Lakshmi Narayanan', date: '2026-07-23', checkIn: '09:02 AM', checkOut: '05:30 PM', status: 'PRESENT', workHours: 8.4, remarks: 'On time' },
+  { id: 3, employeeId: 3, employeeName: 'Ashwin Ramachandran', date: '2026-07-23', checkIn: '09:45 AM', checkOut: '05:45 PM', status: 'LATE', workHours: 8.0, remarks: 'Late check-in due to traffic' },
+  { id: 4, employeeId: 4, employeeName: 'Ananya Subramanian', date: '2026-07-23', checkIn: '08:55 AM', checkOut: '05:00 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' },
+  { id: 5, employeeId: 5, employeeName: 'Suresh Venkatesh', date: '2026-07-23', checkIn: '--:--', checkOut: '--:--', status: 'ON_LEAVE', workHours: 0, remarks: 'Approved casual leave' },
+  { id: 6, employeeId: 6, employeeName: 'Vishnu Prasad', date: '2026-07-23', checkIn: '09:05 AM', checkOut: '05:15 PM', status: 'PRESENT', workHours: 8.1, remarks: 'On time' },
+  { id: 7, employeeId: 7, employeeName: 'Divya Krishnan', date: '2026-07-23', checkIn: '08:50 AM', checkOut: '05:30 PM', status: 'PRESENT', workHours: 8.6, remarks: 'Overtime' },
+  { id: 8, employeeId: 8, employeeName: 'Arvind Swaminathan', date: '2026-07-23', checkIn: '09:30 AM', checkOut: '05:30 PM', status: 'LATE', workHours: 8.0, remarks: 'Traffic delay' },
+  { id: 9, employeeId: 9, employeeName: 'Deepa Rajagopalan', date: '2026-07-23', checkIn: '09:00 AM', checkOut: '05:00 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' },
+  { id: 10, employeeId: 10, employeeName: 'Mahesh Reddy', date: '2026-07-23', checkIn: '09:10 AM', checkOut: '05:10 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' },
+  { id: 11, employeeId: 11, employeeName: 'Kavya Nambiar', date: '2026-07-23', checkIn: '08:58 AM', checkOut: '05:00 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' },
+  { id: 12, employeeId: 12, employeeName: 'Siddharth Rao', date: '2026-07-23', checkIn: '09:12 AM', checkOut: '05:12 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' },
+  { id: 13, employeeId: 13, employeeName: 'Soundarya Subrahmanian', date: '2026-07-23', checkIn: '09:00 AM', checkOut: '05:30 PM', status: 'PRESENT', workHours: 8.5, remarks: 'Overtime' },
+  { id: 14, employeeId: 14, employeeName: 'Harish Hegde', date: '2026-07-23', checkIn: '08:45 AM', checkOut: '05:15 PM', status: 'PRESENT', workHours: 8.5, remarks: 'On time' },
+  { id: 15, employeeId: 15, employeeName: 'Revathi Balakrishnan', date: '2026-07-23', checkIn: '09:03 AM', checkOut: '05:03 PM', status: 'PRESENT', workHours: 8.0, remarks: 'On time' }
 ];
 
 export const INITIAL_LEAVES: LeaveRequestItem[] = [

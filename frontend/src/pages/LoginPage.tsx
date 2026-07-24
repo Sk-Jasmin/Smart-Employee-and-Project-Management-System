@@ -15,17 +15,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, darkMode, 
   const navigate = useNavigate();
 
   const [selectedRole, setSelectedRole] = useState<Role>('ADMIN');
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('admin@smartcorp.com');
+  const [password, setPassword] = useState('Admin@1234');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Handle role selection switch
+  // Handle role selection switch with instant autofill
   const handleRoleSelect = (role: Role) => {
     setSelectedRole(role);
     setAuthError(null);
+    if (role === 'ADMIN') {
+      setUsernameOrEmail('admin@smartcorp.com');
+      setPassword('Admin@1234');
+    } else {
+      setUsernameOrEmail('lakshmi.narayanan@smartcorp.in');
+      setPassword('Employee@1234');
+    }
   };
 
   // Local fallback if darkMode props are not passed

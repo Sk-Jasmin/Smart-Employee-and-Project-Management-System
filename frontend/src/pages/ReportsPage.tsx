@@ -25,6 +25,8 @@ import {
 } from 'lucide-react';
 
 interface ReportsPageProps {
+  currentRole?: Role;
+  currentUser?: User | null;
   employees: Employee[];
   projects: Project[];
   tasks: TaskItem[];
@@ -32,6 +34,8 @@ interface ReportsPageProps {
 }
 
 export const ReportsPage: React.FC<ReportsPageProps> = ({
+  currentRole = 'ADMIN',
+  currentUser,
   employees,
   projects,
   tasks,
@@ -41,14 +45,39 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
   const [activeReportTab, setActiveReportTab] = useState<'employee-tasks' | 'project-progress' | 'pending-tasks'>('employee-tasks');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Department Payroll Tally
-  const totalPayroll = employees.reduce((sum: number, e: Employee) => sum + Number(e.salary), 0);
-  const totalProjectBudget = projects.reduce((sum: number, p: Project) => sum + Number(p.budget), 0);
+  const isEmployeeRole = currentRole === 'EMPLOYEE';
+
+  // Find employee matching currentUser (or fallback to Lakshmi Narayanan empId 2)
+  const currentEmp = isEmployeeRole
+    ? employees.find(e => 
+        (currentUser?.email && e.email.toLowerCase() === currentUser.email.toLowerCase()) ||
+        (currentUser?.fullName && `${e.firstName} ${e.lastName}`.toLowerCase() === currentUser.fullName.toLowerCase())
+      ) || employees.find(e => e.id === 2) || employees[0]
+    : null;
+
+  const myEmpId = currentEmp ? currentEmp.id : null;
+
+  // Filter tasks, projects, employees based on role
+  const displayTasks = isEmployeeRole && myEmpId
+    ? tasks.filter(t => t.assignedEmployeeId === myEmpId)
+    : tasks;
+
+  const displayProjects = isEmployeeRole && myEmpId
+    ? projects.filter(p => p.assignedEmployeeIds?.includes(myEmpId) || displayTasks.some(t => t.projectId === p.id))
+    : projects;
+
+  const displayEmployees = isEmployeeRole && currentEmp
+    ? [currentEmp]
+    : employees;
+
+  // Department Payroll / Compensation Tally
+  const totalPayroll = displayEmployees.reduce((sum: number, e: Employee) => sum + Number(e.salary), 0);
+  const totalProjectBudget = displayProjects.reduce((sum: number, p: Project) => sum + Number(p.budget), 0);
 
   // CSV Exporter
   const handleExportCSV = () => {
     let headers = ['ID', 'Code', 'Name', 'Email', 'Department', 'Designation', 'Salary', 'Status'];
-    let rows = employees.map(e => [
+    let rows = displayEmployees.map(e => [
       e.id,
       e.employeeCode,
       `"${e.firstName} ${e.lastName}"`,
@@ -64,13 +93,13 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'smartcorp_executive_analytics_report.csv');
+    link.setAttribute('download', isEmployeeRole ? 'my_assigned_performance_report.csv' : 'smartcorp_executive_analytics_report.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  if (mainTab === 'audit-logs') {
+  if (!isEmployeeRole && mainTab === 'audit-logs') {
     return (
       <div className="space-y-6">
         {/* Unified Nav Tabs */}
@@ -99,23 +128,25 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
   return (
     <div className="space-y-6">
       
-      {/* Unified Nav Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        <button
-          onClick={() => setMainTab('reports')}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white shadow-xs transition-all cursor-pointer"
-        >
-          <BarChart2 className="w-4 h-4 text-white" />
-          <span>Executive Reports & Analytics</span>
-        </button>
-        <button
-          onClick={() => setMainTab('audit-logs')}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-all cursor-pointer"
-        >
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>System Audit Trail</span>
-        </button>
-      </div>
+      {/* Unified Nav Tabs for Admin */}
+      {!isEmployeeRole && (
+        <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+          <button
+            onClick={() => setMainTab('reports')}
+            className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white shadow-xs transition-all cursor-pointer"
+          >
+            <BarChart2 className="w-4 h-4 text-white" />
+            <span>Executive Reports & Analytics</span>
+          </button>
+          <button
+            onClick={() => setMainTab('audit-logs')}
+            className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-all cursor-pointer"
+          >
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>System Audit Trail</span>
+          </button>
+        </div>
+      )}
 
       <ToastNotification toasts={toasts} onDismiss={(id) => setToasts(prev => prev.filter(t => t.id !== id))} />
 
@@ -126,7 +157,9 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
             <BarChart2 className="page-title-icon text-indigo-600 dark:text-indigo-400" /> Reports & Audit Logs
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Departmental compensation metrics, staff task breakdowns, and project progress telemetry.
+            {isEmployeeRole 
+              ? `Personal performance report, assigned task breakdown, and project telemetry for ${currentEmp?.firstName} ${currentEmp?.lastName}.`
+              : 'Departmental compensation metrics, staff task breakdowns, and project progress telemetry.'}
           </p>
         </div>
 
@@ -151,36 +184,56 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
         </div>
       </div>
 
-      {/* Financial Overview Cards */}
+      {/* Overview Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card className="border-l-4 border-l-indigo-600">
           <CardBody className="p-4">
-            <span className="text-xs uppercase font-bold text-slate-500">Annual Payroll Liability</span>
+            <span className="text-xs uppercase font-bold text-slate-500">
+              {isEmployeeRole ? 'My Annual Salary' : 'Annual Payroll Liability'}
+            </span>
             <div className="flex items-baseline justify-between mt-2">
-              <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">₹{totalPayroll.toLocaleString()}</span>
-              <span className="text-xs text-slate-500">{employees.length} Staff</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">
+                ₹{totalPayroll.toLocaleString()}
+              </span>
+              <span className="text-xs text-slate-500">
+                {isEmployeeRole ? `${currentEmp?.department}` : `${employees.length} Staff`}
+              </span>
             </div>
           </CardBody>
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
           <CardBody className="p-4">
-            <span className="text-xs uppercase font-bold text-slate-500">Portfolio Capital Commitment</span>
+            <span className="text-xs uppercase font-bold text-slate-500">
+              {isEmployeeRole ? 'My Assigned Projects' : 'Portfolio Capital Commitment'}
+            </span>
             <div className="flex items-baseline justify-between mt-2">
-              <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">₹{totalProjectBudget.toLocaleString()}</span>
-              <span className="text-xs text-slate-500">{projects.length} Active Projects</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">
+                {isEmployeeRole ? displayProjects.length : `₹${totalProjectBudget.toLocaleString()}`}
+              </span>
+              <span className="text-xs text-slate-500">
+                {isEmployeeRole ? 'Active Assignments' : `${projects.length} Active Projects`}
+              </span>
             </div>
           </CardBody>
         </Card>
 
         <Card className="border-l-4 border-l-teal-600">
           <CardBody className="p-4">
-            <span className="text-xs uppercase font-bold text-slate-500">Average Compensation / Head</span>
+            <span className="text-xs uppercase font-bold text-slate-500">
+              {isEmployeeRole ? 'My Assigned Tasks' : 'Average Compensation / Head'}
+            </span>
             <div className="flex items-baseline justify-between mt-2">
               <span className="text-2xl font-bold font-mono text-slate-900 dark:text-slate-100">
-                ₹{employees.length > 0 ? Math.round(totalPayroll / employees.length).toLocaleString() : 0}
+                {isEmployeeRole 
+                  ? displayTasks.length
+                  : `₹${employees.length > 0 ? Math.round(totalPayroll / employees.length).toLocaleString() : 0}`}
               </span>
-              <span className="text-xs text-slate-500">Per Annum</span>
+              <span className="text-xs text-slate-500">
+                {isEmployeeRole 
+                  ? `${displayTasks.filter(t => t.status === 'DONE').length} Completed` 
+                  : 'Per Annum'}
+              </span>
             </div>
           </CardBody>
         </Card>
@@ -197,7 +250,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
           }`}
         >
           <Users className="w-4 h-4" />
-          <span>Employee Task Breakdown</span>
+          <span>{isEmployeeRole ? 'My Task Performance' : 'Employee Task Breakdown'}</span>
         </button>
 
         <button
@@ -209,7 +262,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
           }`}
         >
           <Briefcase className="w-4 h-4" />
-          <span>Project Progress Report</span>
+          <span>{isEmployeeRole ? 'My Assigned Projects' : 'Project Progress Report'}</span>
         </button>
 
         <button
@@ -221,17 +274,14 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
           }`}
         >
           <Clock className="w-4 h-4" />
-          <span>Pending Task Report ({tasks.filter(t => t.status !== 'DONE').length})</span>
+          <span>{isEmployeeRole ? 'My Pending Tasks' : 'Pending Task Report'} ({displayTasks.filter(t => t.status !== 'DONE').length})</span>
         </button>
       </div>
-
-
-
 
       {/* TAB 1: Employee-Wise Task Report */}
       {activeReportTab === 'employee-tasks' && (
         <Card>
-          <CardHeader>Employee Task Breakdown</CardHeader>
+          <CardHeader>{isEmployeeRole ? 'My Task Performance Summary' : 'Employee Task Breakdown'}</CardHeader>
           <CardBody className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left border-collapse">
@@ -245,8 +295,8 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
-                  {employees.map((emp) => {
-                    const empTasks = tasks.filter(t => t.assignedEmployeeId === emp.id);
+                  {displayEmployees.map((emp) => {
+                    const empTasks = displayTasks.filter(t => t.assignedEmployeeId === emp.id);
                     const doneTasks = empTasks.filter(t => t.status === 'DONE');
                     const rate = empTasks.length > 0 ? Math.round((doneTasks.length / empTasks.length) * 100) : 0;
                     return (
@@ -279,7 +329,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
       {/* TAB 2: Project Progress Report */}
       {activeReportTab === 'project-progress' && (
         <Card>
-          <CardHeader>Project Milestones & Capital Progress</CardHeader>
+          <CardHeader>{isEmployeeRole ? 'My Assigned Projects' : 'Project Milestones & Capital Progress'}</CardHeader>
           <CardBody className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left border-collapse">
@@ -292,7 +342,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
-                  {projects.map((p) => (
+                  {displayProjects.map((p) => (
                     <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
                       <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{p.name}</td>
                       <td className="px-4 py-3 font-mono font-semibold">₹{p.budget.toLocaleString()}</td>
@@ -310,7 +360,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
       {/* TAB 3: Pending Task Report */}
       {activeReportTab === 'pending-tasks' && (
         <Card>
-          <CardHeader>Pending Tasks Audit</CardHeader>
+          <CardHeader>{isEmployeeRole ? 'My Pending Tasks' : 'Pending Tasks Audit'}</CardHeader>
           <CardBody className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left border-collapse">
@@ -323,7 +373,7 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
-                  {tasks.filter(t => t.status !== 'DONE').map((t) => (
+                  {displayTasks.filter(t => t.status !== 'DONE').map((t) => (
                     <tr key={t.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
                       <td className="px-4 py-3 font-bold text-slate-900 dark:text-white">{t.title}</td>
                       <td className="px-4 py-3"><Badge variant={t.priority === 'URGENT' ? 'red' : 'yellow'}>{t.priority}</Badge></td>
@@ -337,8 +387,6 @@ export const ReportsPage: React.FC<ReportsPageProps> = ({
           </CardBody>
         </Card>
       )}
-
-
 
     </div>
   );

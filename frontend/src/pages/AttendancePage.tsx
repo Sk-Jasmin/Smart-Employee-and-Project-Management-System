@@ -73,8 +73,15 @@ export const AttendancePage: React.FC<AttendancePageProps> = ({
     }
   };
 
+  const getEmpName = (a: AttendanceRecord) => {
+    if (a && a.employeeName) return a.employeeName;
+    const found = employees.find(e => e.id === a.employeeId);
+    return found ? `${found.firstName} ${found.lastName}` : `Employee #${a.employeeId}`;
+  };
+
   const filteredAttendance = attendance.filter((a) => {
-    const matchesSearch = a.employeeName.toLowerCase().includes(searchTerm.toLowerCase());
+    const empName = getEmpName(a);
+    const matchesSearch = empName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'ALL' || a.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -85,7 +92,7 @@ export const AttendancePage: React.FC<AttendancePageProps> = ({
       header: 'Employee Name',
       render: (a: AttendanceRecord) => (
         <div>
-          <span className="font-bold text-slate-900 dark:text-slate-100 block">{a.employeeName}</span>
+          <span className="font-bold text-slate-900 dark:text-slate-100 block">{getEmpName(a)}</span>
           <span className="text-xs text-slate-500 dark:text-slate-400">ID: #{a.employeeId}</span>
         </div>
       )
@@ -205,7 +212,7 @@ export const AttendancePage: React.FC<AttendancePageProps> = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="page-title text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            <Clock className="page-title-icon text-blue-700 dark:text-blue-500" /> Attendance & Leaves
+            <Clock className="page-title-icon text-blue-700 dark:text-blue-500" /> Attendance
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Monitor daily check-ins, check-outs, work hour tallies, and leave requests.

@@ -178,6 +178,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <span>My Tasks Board</span>
                         <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-mono">/tasks</span>
                       </Link>
+                      <Link to="/reports" onClick={() => setShowBookmarks(false)} className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between font-medium">
+                        <span>Reports</span>
+                        <span className="text-[10px] text-teal-600 dark:text-teal-400 font-mono">/reports</span>
+                      </Link>
                       <Link to="/profile" onClick={() => setShowBookmarks(false)} className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between font-medium">
                         <span>My Profile</span>
                         <span className="text-[10px] text-sky-600 dark:text-sky-400 font-mono">/profile</span>
@@ -194,7 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono">/projects</span>
                       </Link>
                       <Link to="/attendance" onClick={() => setShowBookmarks(false)} className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between font-medium">
-                        <span>Attendance & Leaves</span>
+                        <span>Attendance</span>
                         <span className="text-[10px] text-amber-600 dark:text-amber-400 font-mono">/attendance</span>
                       </Link>
                       <Link to="/swagger" onClick={() => setShowBookmarks(false)} className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between font-medium">

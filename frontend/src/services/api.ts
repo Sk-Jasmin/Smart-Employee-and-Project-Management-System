@@ -91,7 +91,7 @@ class MockBackendService {
 
   private initSchemaVersion(): void {
     try {
-      const CURRENT_VER = 'v3_south_indian_15_emp_25_tasks';
+      const CURRENT_VER = 'v7_strictly_20_profiles_10_tasks';
       if (localStorage.getItem('db_schema_version') !== CURRENT_VER) {
         localStorage.removeItem('db_employees');
         localStorage.removeItem('db_registered_users');
@@ -102,6 +102,14 @@ class MockBackendService {
         localStorage.removeItem('db_notifications');
         localStorage.removeItem('db_announcements');
         localStorage.removeItem('db_audit_logs');
+        localStorage.removeItem('smartcorp_employees');
+        localStorage.removeItem('smartcorp_projects');
+        localStorage.removeItem('smartcorp_tasks');
+        localStorage.removeItem('smartcorp_attendance');
+        localStorage.removeItem('smartcorp_leaves');
+        localStorage.removeItem('smartcorp_announcements');
+        localStorage.removeItem('smartcorp_audit_logs');
+        localStorage.removeItem('smartcorp_notifications');
         localStorage.setItem('db_schema_version', CURRENT_VER);
       }
     } catch {
@@ -132,9 +140,23 @@ class MockBackendService {
     }
   ]);
 
-  private employees: Employee[] = this.getStorage('db_employees', INITIAL_EMPLOYEES);
+  private employees: Employee[] = (() => {
+    const loaded = this.getStorage('db_employees', INITIAL_EMPLOYEES);
+    if (Array.isArray(loaded) && loaded.length > 20) {
+      this.setStorage('db_employees', INITIAL_EMPLOYEES.slice(0, 20));
+      return INITIAL_EMPLOYEES.slice(0, 20);
+    }
+    return loaded.slice(0, 20);
+  })();
   private projects: Project[] = this.getStorage('db_projects', INITIAL_PROJECTS);
-  private tasks: TaskItem[] = this.getStorage('db_tasks', INITIAL_TASKS);
+  private tasks: TaskItem[] = (() => {
+    const loaded = this.getStorage('db_tasks', INITIAL_TASKS);
+    if (Array.isArray(loaded) && loaded.length > 10) {
+      this.setStorage('db_tasks', INITIAL_TASKS.slice(0, 10));
+      return INITIAL_TASKS.slice(0, 10);
+    }
+    return loaded.slice(0, 10);
+  })();
   private attendance: AttendanceRecord[] = this.getStorage('db_attendance', INITIAL_ATTENDANCE);
   private leaves: LeaveRequestItem[] = this.getStorage('db_leaves', INITIAL_LEAVES);
   private notifications: NotificationItem[] = this.getStorage('db_notifications', INITIAL_NOTIFICATIONS);

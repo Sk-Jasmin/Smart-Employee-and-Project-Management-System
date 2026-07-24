@@ -23,15 +23,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, curre
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'projects', label: 'Projects', icon: FolderKanban },
     { id: 'tasks', label: 'Tasks', icon: CheckSquare },
+    { id: 'reports', label: 'Reports', icon: FileSpreadsheet },
   ];
 
   const adminMenuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'employees', label: 'Employees', icon: Users },
     { id: 'projects', label: 'Projects', icon: FolderKanban },
-    { id: 'tasks', label: 'Tasks & Progress', icon: CheckSquare },
-    { id: 'attendance', label: 'Attendance & Leaves', icon: CalendarDays },
-    { id: 'reports', label: 'Reports & Export', icon: FileSpreadsheet },
+    { id: 'tasks', label: 'Tasks', icon: CheckSquare },
+    { id: 'attendance', label: 'Attendance', icon: CalendarDays },
+    { id: 'reports', label: 'Audit Logs', icon: FileSpreadsheet },
     { id: 'swagger', label: 'Swagger API Specs', icon: Code },
   ];
 

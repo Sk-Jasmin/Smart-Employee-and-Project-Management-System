@@ -7,7 +7,7 @@ import { Modal } from '../components/ui/Modal';
 import { FormInput, FormTextarea } from '../components/ui/FormInput';
 import { ToastMessage, ToastNotification } from '../components/ui/ToastNotification';
 import { mockBackend } from '../services/api';
-import { Bell, CheckCircle2, Clock, Check, Trash2, Filter, Volume2, VolumeX, Mail, Send, Settings, ShieldCheck } from 'lucide-react';
+import { Bell, CheckCircle2, Clock, Check, Trash2, Filter, Mail, Send, Settings, ShieldCheck } from 'lucide-react';
 
 interface NotificationsPageProps {
   notifications: NotificationItem[];
@@ -19,7 +19,6 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
   setNotifications
 }) => {
   const [filterCategory, setFilterCategory] = useState<'ALL' | 'UNREAD' | 'TASK' | 'LEAVE' | 'ANNOUNCEMENT'>('ALL');
-  const [soundEnabled, setSoundEnabled] = useState(true);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
@@ -123,31 +122,19 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
           <Button
             variant="primary"
             size="sm"
-            icon={<Mail className="w-4 h-4" />}
+            icon={<Mail className="w-3.5 h-3.5" />}
             onClick={() => setIsEmailModalOpen(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-xs"
+            className="bg-indigo-600 hover:bg-indigo-700 !text-[11px] !font-medium px-3 py-1.5"
           >
-            Dispatch Email Notification
+            Send Email
           </Button>
-
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-2 rounded-lg border text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors ${
-              soundEnabled
-                ? 'border-emerald-500/50 bg-emerald-50 text-emerald-700 dark:bg-slate-950 dark:text-emerald-300'
-                : 'border-slate-300 dark:border-slate-800 text-slate-500'
-            }`}
-            title="Toggle Alert Chime Sound"
-          >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-emerald-600" /> : <VolumeX className="w-4 h-4" />}
-            <span className="hidden sm:inline">{soundEnabled ? 'Chime On' : 'Chime Muted'}</span>
-          </button>
 
           <Button
             variant="outline"
             size="sm"
-            icon={<Check className="w-4 h-4" />}
+            icon={<Check className="w-3.5 h-3.5" />}
             onClick={handleMarkAllRead}
+            className="!text-[11px] !font-medium px-3 py-1.5"
           >
             Mark All Read
           </Button>
@@ -156,9 +143,9 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
             <Button
               variant="danger"
               size="sm"
-              icon={<Trash2 className="w-4 h-4" />}
+              icon={<Trash2 className="w-3.5 h-3.5" />}
               onClick={handleClearAll}
-              className="bg-rose-600 hover:bg-rose-700 text-xs"
+              className="bg-rose-600 hover:bg-rose-700 !text-[11px] !font-medium px-3 py-1.5"
             >
               Clear Log
             </Button>
