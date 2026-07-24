@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: smart_emp_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - smart_net
+
+  backend:
+    build: .
+    container_name: smart_backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: mysqldb
+      DB_PORT: 3306
+      DB_NAME: smart_emp_db
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+      JWT_SECRET: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    depends_on:
+      - mysqldb
+    networks:
+      - smart_net
+
+volumes:
+  mysql_data:
+
+networks:
+  smart_net:
+    driver: bridge

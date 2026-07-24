@@ -1,0 +1,6 @@
+{
+  "name": "Smart Employee & Project Management System",
+  "description": "System Architecture & Specifications for Smart Employee & Project Management System",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
