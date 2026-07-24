@@ -8,7 +8,8 @@ import {
   NotificationItem, 
   Announcement,
   AuditLogItem,
-  User 
+  User,
+  Role
 } from '../types';
 import { 
   INITIAL_EMPLOYEES, 

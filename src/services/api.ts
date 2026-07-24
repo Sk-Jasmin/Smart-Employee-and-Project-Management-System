@@ -90,7 +90,7 @@ class MockBackendService {
 
   private initSchemaVersion(): void {
     try {
-      const CURRENT_VER = 'v4_strict_credentials_validation';
+      const CURRENT_VER = 'v5_add_10_employees_4_tasks';
       if (localStorage.getItem('db_schema_version') !== CURRENT_VER) {
         localStorage.removeItem('db_employees');
         localStorage.removeItem('db_registered_users');
@@ -101,6 +101,14 @@ class MockBackendService {
         localStorage.removeItem('db_notifications');
         localStorage.removeItem('db_announcements');
         localStorage.removeItem('db_audit_logs');
+        localStorage.removeItem('smartcorp_employees');
+        localStorage.removeItem('smartcorp_projects');
+        localStorage.removeItem('smartcorp_tasks');
+        localStorage.removeItem('smartcorp_attendance');
+        localStorage.removeItem('smartcorp_leaves');
+        localStorage.removeItem('smartcorp_announcements');
+        localStorage.removeItem('smartcorp_audit_logs');
+        localStorage.removeItem('smartcorp_notifications');
         localStorage.setItem('db_schema_version', CURRENT_VER);
       }
     } catch {

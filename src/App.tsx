@@ -66,6 +66,17 @@ export default function App() {
 
   // Core Data Collections with localStorage persistence
   const [employees, setEmployees] = useState<Employee[]>(() => {
+    if (localStorage.getItem('smartcorp_app_version') !== 'v5_add_10_employees_4_tasks') {
+      localStorage.removeItem('smartcorp_employees');
+      localStorage.removeItem('smartcorp_projects');
+      localStorage.removeItem('smartcorp_tasks');
+      localStorage.removeItem('smartcorp_attendance');
+      localStorage.removeItem('smartcorp_leaves');
+      localStorage.removeItem('smartcorp_announcements');
+      localStorage.removeItem('smartcorp_audit_logs');
+      localStorage.removeItem('smartcorp_notifications');
+      localStorage.setItem('smartcorp_app_version', 'v5_add_10_employees_4_tasks');
+    }
     const saved = localStorage.getItem('smartcorp_employees');
     return saved ? JSON.parse(saved) : INITIAL_EMPLOYEES;
   });
@@ -213,29 +224,37 @@ export default function App() {
               <Route
                 path="/login"
                 element={
-                  <LoginPage
-                    onLoginSuccess={(user, role) => {
-                      setCurrentUser(user);
-                      setCurrentRole(role);
-                      setIsAuthenticated(true);
-                    }}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                  />
+                  isAuthenticated ? (
+                    <Navigate to="/" replace />
+                  ) : (
+                    <LoginPage
+                      onLoginSuccess={(user, role) => {
+                        setCurrentUser(user);
+                        setCurrentRole(role);
+                        setIsAuthenticated(true);
+                      }}
+                      darkMode={darkMode}
+                      setDarkMode={setDarkMode}
+                    />
+                  )
                 }
               />
               <Route
                 path="/register"
                 element={
-                  <RegisterPage
-                    onRegisterSuccess={(user) => {
-                      setCurrentUser(user);
-                      setCurrentRole(user.role || 'EMPLOYEE');
-                      setIsAuthenticated(true);
-                    }}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                  />
+                  isAuthenticated ? (
+                    <Navigate to="/" replace />
+                  ) : (
+                    <RegisterPage
+                      onRegisterSuccess={(user) => {
+                        setCurrentUser(user);
+                        setCurrentRole(user.role || 'EMPLOYEE');
+                        setIsAuthenticated(true);
+                      }}
+                      darkMode={darkMode}
+                      setDarkMode={setDarkMode}
+                    />
+                  )
                 }
               />
               <Route path="/forgot-password" element={<ForgotPasswordPage darkMode={darkMode} setDarkMode={setDarkMode} />} />

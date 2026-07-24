@@ -348,6 +348,226 @@ export const INITIAL_EMPLOYEES: Employee[] = [
     achievements: [
       { id: 21, title: 'AI Telemetry Pioneer 🤖', badge: 'AI', note: 'Built real-time telemetry model detecting project bottlenecks.' }
     ]
+  },
+  {
+    id: 16,
+    employeeCode: 'EMP-116',
+    firstName: 'Preeti',
+    lastName: 'Sharma',
+    email: 'preeti.sharma@smartcorp.in',
+    phone: '+91 84321 09876',
+    department: 'Engineering',
+    designation: 'Cybersecurity & Application Security Lead',
+    salary: 1980000,
+    dateOfBirth: '1991-11-04',
+    joiningDate: '2022-03-01',
+    address: '14 Whitefield Main Rd, Bengaluru, Karnataka',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 28, name: 'Certified Information Systems Security Professional (CISSP)', issuer: 'ISC2', issueDate: '2024-04-10', credentialId: 'CISSP-10928' }
+    ],
+    achievements: [
+      { id: 22, title: 'Zero Trust Security Guard 🔒', badge: 'SECURITY', note: 'Implemented Zero Trust API gateway authentication layer.' }
+    ]
+  },
+  {
+    id: 17,
+    employeeCode: 'EMP-117',
+    firstName: 'Rajesh',
+    lastName: 'Nair',
+    email: 'rajesh.nair@smartcorp.in',
+    phone: '+91 83210 98765',
+    department: 'Engineering',
+    designation: 'Senior Full Stack Specialist (Node/React)',
+    salary: 1800000,
+    dateOfBirth: '1993-08-19',
+    joiningDate: '2021-10-15',
+    address: '88 Panampilly Nagar, Kochi, Kerala',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 29, name: 'AWS Certified Solutions Architect Associate', issuer: 'AWS', issueDate: '2024-09-12', credentialId: 'AWS-77401' }
+    ],
+    achievements: [
+      { id: 23, title: 'Full Stack Maven ⚡', badge: 'FULLSTACK', note: 'Refactored backend websocket notification engine for 5x speedup.' }
+    ]
+  },
+  {
+    id: 18,
+    employeeCode: 'EMP-118',
+    firstName: 'Meera',
+    lastName: 'Joshi',
+    email: 'meera.joshi@smartcorp.in',
+    phone: '+91 82109 87654',
+    department: 'Product',
+    designation: 'Senior UX Research Analyst',
+    salary: 1620000,
+    dateOfBirth: '1995-02-14',
+    joiningDate: '2023-01-10',
+    address: '202 Viman Nagar, Pune, Maharashtra',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 30, name: 'NN/g UX Research Specialist', issuer: 'Nielsen Norman Group', issueDate: '2024-05-18', credentialId: 'NNG-33410' }
+    ],
+    achievements: [
+      { id: 24, title: 'User Voice Champion 🎤', badge: 'RESEARCH', note: 'Spearheaded user usability testing sessions across 8 enterprise clients.' }
+    ]
+  },
+  {
+    id: 19,
+    employeeCode: 'EMP-119',
+    firstName: 'Vikram',
+    lastName: 'Choudhury',
+    email: 'vikram.choudhury@smartcorp.in',
+    phone: '+91 81098 76543',
+    department: 'Finance',
+    designation: 'Senior Financial Controller & Analyst',
+    salary: 1950000,
+    dateOfBirth: '1989-12-01',
+    joiningDate: '2020-04-01',
+    address: '45 Salt Lake Sector V, Kolkata, West Bengal',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 31, name: 'Chartered Financial Analyst (CFA Level II)', issuer: 'CFA Institute', issueDate: '2022-11-20', credentialId: 'CFA-88902' }
+    ],
+    achievements: [
+      { id: 25, title: 'Fiscal Precision Award 📈', badge: 'FINANCE', note: 'Automated tax compliance reports reducing monthly close by 4 days.' }
+    ]
+  },
+  {
+    id: 20,
+    employeeCode: 'EMP-120',
+    firstName: 'Swati',
+    lastName: 'Menon',
+    email: 'swati.menon@smartcorp.in',
+    phone: '+91 80987 65432',
+    department: 'Operations',
+    designation: 'Lead Supply Chain & Logistics Coordinator',
+    salary: 1720000,
+    dateOfBirth: '1992-06-18',
+    joiningDate: '2021-05-10',
+    address: '12 MG Road, Thiruvananthapuram, Kerala',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 32, name: 'Certified Supply Chain Professional (CSCP)', issuer: 'ASCM', issueDate: '2023-08-14', credentialId: 'CSCP-44012' }
+    ],
+    achievements: [
+      { id: 26, title: 'Operational Speed Award 🚚', badge: 'OPS', note: 'Optimized corporate asset procurement cycle time by 35%.' }
+    ]
+  },
+  {
+    id: 21,
+    employeeCode: 'EMP-121',
+    firstName: 'Aditya',
+    lastName: 'Varma',
+    email: 'aditya.varma@smartcorp.in',
+    phone: '+91 79876 54321',
+    department: 'Engineering',
+    designation: 'Cloud Infrastructure & DevSecOps Engineer',
+    salary: 1880000,
+    dateOfBirth: '1994-01-22',
+    joiningDate: '2022-08-01',
+    address: '99 HITEC City, Kondapur, Hyderabad, Telangana',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 33, name: 'AWS Certified Security Specialist', issuer: 'AWS', issueDate: '2024-10-05', credentialId: 'AWS-SEC-9012' }
+    ],
+    achievements: [
+      { id: 27, title: 'Cloud Defender 🛡️', badge: 'DEVSECOPS', note: 'Automated vulnerability scanning into GitHub Actions CI/CD pipeline.' }
+    ]
+  },
+  {
+    id: 22,
+    employeeCode: 'EMP-122',
+    firstName: 'Nitya',
+    lastName: 'Sundaram',
+    email: 'nitya.sundaram@smartcorp.in',
+    phone: '+91 78765 43210',
+    department: 'Human Resources',
+    designation: 'Employee Engagement & Wellness Lead',
+    salary: 1580000,
+    dateOfBirth: '1995-09-30',
+    joiningDate: '2023-02-15',
+    address: '56 Jayanagar 4th Block, Bengaluru, Karnataka',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 34, name: 'Certified Corporate Wellness Specialist', issuer: 'Corporate Wellness Association', issueDate: '2024-01-20', credentialId: 'CCWS-11920' }
+    ],
+    achievements: [
+      { id: 28, title: 'Culture & Joy Champion 🎉', badge: 'WELLNESS', note: 'Organized enterprise hackathon and quarterly wellness retreat.' }
+    ]
+  },
+  {
+    id: 23,
+    employeeCode: 'EMP-123',
+    firstName: 'Rohan',
+    lastName: 'Gupta',
+    email: 'rohan.gupta@smartcorp.in',
+    phone: '+91 77654 32109',
+    department: 'Engineering',
+    designation: 'Senior Data Platform & Spark Specialist',
+    salary: 1920000,
+    dateOfBirth: '1991-04-12',
+    joiningDate: '2021-04-01',
+    address: '78 DLF Cyber City, Gurugram, Haryana',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 35, name: 'Apache Spark Certified Developer', issuer: 'Databricks', issueDate: '2023-11-14', credentialId: 'SPARK-55104' }
+    ],
+    achievements: [
+      { id: 29, title: 'Data Engine Architect 🚀', badge: 'DATA', note: 'Engineered real-time streaming ingestion pipeline handling 1M+ daily events.' }
+    ]
+  },
+  {
+    id: 24,
+    employeeCode: 'EMP-124',
+    firstName: 'Archana',
+    lastName: 'Pillai',
+    email: 'archana.pillai@smartcorp.in',
+    phone: '+91 76543 21098',
+    department: 'Design',
+    designation: 'Lead Interaction & Motion Designer',
+    salary: 1650000,
+    dateOfBirth: '1994-07-08',
+    joiningDate: '2022-06-01',
+    address: '33 MG Road, Ernakulam, Kerala',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 36, name: 'Principle Motion Graphics Master', issuer: 'Adobe Certified', issueDate: '2023-09-22', credentialId: 'ACE-99401' }
+    ],
+    achievements: [
+      { id: 30, title: 'Visual Delight Master 🎨', badge: 'MOTION', note: 'Created sleek micro-interaction library for mobile check-in portal.' }
+    ]
+  },
+  {
+    id: 25,
+    employeeCode: 'EMP-125',
+    firstName: 'Tarun',
+    lastName: 'Kapoor',
+    email: 'tarun.kapoor@smartcorp.in',
+    phone: '+91 75432 10987',
+    department: 'Operations',
+    designation: 'Head of IT Infrastructure & Helpdesk',
+    salary: 1780000,
+    dateOfBirth: '1988-10-25',
+    joiningDate: '2019-11-15',
+    address: '10 Sector 18, Noida, Uttar Pradesh',
+    status: 'ACTIVE',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    certifications: [
+      { id: 37, name: 'ITIL v4 Managing Professional', issuer: 'AXELOS', issueDate: '2022-05-10', credentialId: 'ITIL-88301' }
+    ],
+    achievements: [
+      { id: 31, title: '99.9% IT Resolution Hero 💻', badge: 'ITHELP', note: 'Maintained average ticket resolution time under 15 minutes across company.' }
+    ]
   }
 ];
 
@@ -769,6 +989,58 @@ export const INITIAL_TASKS: TaskItem[] = [
     progressPercentage: 65,
     deadline: '2026-08-18',
     remarks: 'Prompt template pipeline tested; integrating with PDF export service.'
+  },
+  {
+    id: 129,
+    projectId: 1,
+    title: 'Zero-Trust WebAuthn & Multi-Factor Auth (MFA) Service',
+    description: 'Implement WebAuthn security protocols, FIDO2 passkey hardware authentication, and SMS OTP fallback for executive user accounts.',
+    assignedEmployeeId: 16,
+    assignedBy: 'Karthik Sundaram (Admin)',
+    priority: 'URGENT',
+    status: 'IN_PROGRESS',
+    progressPercentage: 55,
+    deadline: '2026-08-25',
+    remarks: 'WebAuthn passkey registration endpoints completed; integrating SMS gateway fallback.'
+  },
+  {
+    id: 130,
+    projectId: 2,
+    title: 'Automated Cloud FinOps Cost Optimization & Resource Tagging',
+    description: 'Set up AWS Cost Explorer API alerts, auto-shutdown scripts for non-prod Aurora clusters, and automated resource tag enforcement.',
+    assignedEmployeeId: 21,
+    assignedBy: 'Lakshmi Narayanan (DevOps Lead)',
+    priority: 'MEDIUM',
+    status: 'TODO',
+    progressPercentage: 20,
+    deadline: '2026-09-05',
+    remarks: 'Cost tagging policies defined in Terraform; awaiting approval from Finance team.'
+  },
+  {
+    id: 131,
+    projectId: 3,
+    title: 'Real-time Geofenced Attendance Verification Service',
+    description: 'Construct serverless geofencing radius validation algorithm matching GPS coordinates against corporate office location polygons.',
+    assignedEmployeeId: 17,
+    assignedBy: 'Ashwin Ramachandran (Product Lead)',
+    priority: 'HIGH',
+    status: 'IN_PROGRESS',
+    progressPercentage: 40,
+    deadline: '2026-09-12',
+    remarks: 'Haversine formula & polygon intersection logic written in Node microservice.'
+  },
+  {
+    id: 132,
+    projectId: 4,
+    title: 'Real-time Telemetry Data Lakehouse & Apache Iceberg Pipeline',
+    description: 'Deploy PySpark streaming job to ingest project audit logs into Apache Iceberg table format for executive query acceleration.',
+    assignedEmployeeId: 23,
+    assignedBy: 'Karthik Sundaram (Admin)',
+    priority: 'HIGH',
+    status: 'REVIEW',
+    progressPercentage: 85,
+    deadline: '2026-08-30',
+    remarks: 'Iceberg table partition scheme optimized; performance test shows 8x query speedup.'
   }
 ];
 
@@ -787,7 +1059,17 @@ export const INITIAL_ATTENDANCE: AttendanceRecord[] = [
   { id: 12, employeeId: 12, date: '2026-07-23', checkIn: '09:12 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.5 hrs', overtimeHours: '0.0 hrs' },
   { id: 13, employeeId: 13, date: '2026-07-23', checkIn: '09:00 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.5 hrs' },
   { id: 14, employeeId: 14, date: '2026-07-23', checkIn: '08:45 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.2 hrs', overtimeHours: '0.5 hrs' },
-  { id: 15, employeeId: 15, date: '2026-07-23', checkIn: '09:03 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.7 hrs', overtimeHours: '0.0 hrs' }
+  { id: 15, employeeId: 15, date: '2026-07-23', checkIn: '09:03 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.7 hrs', overtimeHours: '0.0 hrs' },
+  { id: 16, employeeId: 16, date: '2026-07-23', checkIn: '08:52 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
+  { id: 17, employeeId: 17, date: '2026-07-23', checkIn: '09:05 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.8 hrs', overtimeHours: '0.0 hrs' },
+  { id: 18, employeeId: 18, date: '2026-07-23', checkIn: '09:20 AM', checkOut: '--:--', status: 'LATE', totalHours: '7.3 hrs', overtimeHours: '0.0 hrs' },
+  { id: 19, employeeId: 19, date: '2026-07-23', checkIn: '08:48 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.1 hrs', overtimeHours: '0.5 hrs' },
+  { id: 20, employeeId: 20, date: '2026-07-23', checkIn: '09:00 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
+  { id: 21, employeeId: 21, date: '2026-07-23', checkIn: '09:10 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.6 hrs', overtimeHours: '0.0 hrs' },
+  { id: 22, employeeId: 22, date: '2026-07-23', checkIn: '08:55 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.0 hrs', overtimeHours: '0.0 hrs' },
+  { id: 23, employeeId: 23, date: '2026-07-23', checkIn: '09:02 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.7 hrs', overtimeHours: '0.0 hrs' },
+  { id: 24, employeeId: 24, date: '2026-07-23', checkIn: '09:15 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '7.5 hrs', overtimeHours: '0.0 hrs' },
+  { id: 25, employeeId: 25, date: '2026-07-23', checkIn: '08:45 AM', checkOut: '--:--', status: 'PRESENT', totalHours: '8.2 hrs', overtimeHours: '0.5 hrs' }
 ];
 
 export const INITIAL_LEAVES: LeaveRequestItem[] = [
