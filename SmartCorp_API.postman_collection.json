@@ -1,0 +1,343 @@
+{
+  "info": {
+    "_postman_id": "7b89e210-4491-4c56-9b12-88f2190abcde",
+    "name": "SmartCorp Employee & Project Management API",
+    "description": "Comprehensive Postman API Collection for SmartCorp Enterprise Employee & Project Management System (Spring Boot 3 + MySQL / React 18). Includes authentication, employee management, project tracking, task workflows, attendance, leave approvals, and executive report metrics.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.data && jsonData.data.accessToken) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"admin@smartcorp.com\",\n  \"password\": \"Admin@1234\",\n  \"role\": \"ADMIN\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Authenticates corporate admin user and receives JWT access token."
+          }
+        },
+        {
+          "name": "Employee Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usernameOrEmail\": \"lakshmi.narayanan@smartcorp.in\",\n  \"password\": \"Employee@1234\",\n  \"role\": \"EMPLOYEE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Authenticates employee account and receives JWT token."
+          }
+        },
+        {
+          "name": "Register New Staff Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Rahul Verma\",\n  \"username\": \"rahulv\",\n  \"email\": \"rahul.verma@smartcorp.in\",\n  \"phone\": \"+91 98760 12345\",\n  \"password\": \"Rahul@1234\",\n  \"confirmPassword\": \"Rahul@1234\",\n  \"department\": \"Engineering\",\n  \"role\": \"EMPLOYEE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Registers a new staff member account in the system database."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Employees Management",
+      "item": [
+        {
+          "name": "Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["employees"]
+            },
+            "description": "Retrieves complete directory listing of corporate employees."
+          }
+        },
+        {
+          "name": "Get Employee By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["employees", "1"]
+            },
+            "description": "Retrieves employee dossier by unique ID including certifications and achievements."
+          }
+        },
+        {
+          "name": "Create New Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeCode\": \"EMP-126\",\n  \"firstName\": \"Sanjay\",\n  \"lastName\": \"Gupta\",\n  \"email\": \"sanjay.gupta@smartcorp.in\",\n  \"phone\": \"+91 91234 56789\",\n  \"department\": \"Engineering\",\n  \"designation\": \"Senior Cloud Security Architect\",\n  \"salary\": 2050000,\n  \"dateOfBirth\": \"1990-05-14\",\n  \"joiningDate\": \"2026-07-01\",\n  \"address\": \"44 Outer Ring Road, Marathahalli, Bengaluru, Karnataka\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["employees"]
+            },
+            "description": "Adds a new employee record to the database."
+          }
+        },
+        {
+          "name": "Update Employee Record",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Karthik\",\n  \"lastName\": \"Sundaram\",\n  \"designation\": \"Lead Principal Java Architect\",\n  \"salary\": 2100000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["employees", "1"]
+            },
+            "description": "Updates existing employee record."
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees/25",
+              "host": ["{{baseUrl}}"],
+              "path": ["employees", "25"]
+            },
+            "description": "Removes an employee profile from system database."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Projects Management",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["projects"]
+            },
+            "description": "Lists all active and completed corporate projects with budget allocation."
+          }
+        },
+        {
+          "name": "Create New Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Zero-Trust Identity Federation Portal\",\n  \"description\": \"Deploying Keycloak OAuth2 OIDC SSO server across enterprise apps.\",\n  \"priority\": \"HIGH\",\n  \"status\": \"IN_PROGRESS\",\n  \"startDate\": \"2026-08-01\",\n  \"deadline\": \"2026-11-30\",\n  \"budget\": 3800000,\n  \"assignedEmployeeIds\": [1, 2, 16, 21]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["projects"]
+            },
+            "description": "Creates a new corporate project initiative."
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Tasks Management",
+      "item": [
+        {
+          "name": "Get All Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tasks",
+              "host": ["{{baseUrl}}"],
+              "path": ["tasks"]
+            },
+            "description": "Retrieves master task list across all active projects."
+          }
+        },
+        {
+          "name": "Create New Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": 1,\n  \"title\": \"Spring Boot Actuator Prometheus Metrics\",\n  \"description\": \"Configure custom Micrometer counter gauges for JVM memory monitoring.\",\n  \"assignedEmployeeId\": 1,\n  \"priority\": \"HIGH\",\n  \"status\": \"IN_PROGRESS\",\n  \"progressPercentage\": 60,\n  \"deadline\": \"2026-08-15\",\n  \"remarks\": \"Prometheus endpoint configured and tested locally.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tasks",
+              "host": ["{{baseUrl}}"],
+              "path": ["tasks"]
+            },
+            "description": "Assigns a new task under a specific project."
+          }
+        },
+        {
+          "name": "Update Task Status & Progress",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"DONE\",\n  \"progressPercentage\": 100,\n  \"remarks\": \"Task completed successfully and passed peer review.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tasks/101",
+              "host": ["{{baseUrl}}"],
+              "path": ["tasks", "101"]
+            },
+            "description": "Updates progress percentage and status of a task."
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Attendance & Leaves",
+      "item": [
+        {
+          "name": "Get Attendance Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/attendance",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance"]
+            },
+            "description": "Fetches daily check-in / check-out biometric attendance records."
+          }
+        },
+        {
+          "name": "Get Leave Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/leaves",
+              "host": ["{{baseUrl}}"],
+              "path": ["leaves"]
+            },
+            "description": "Retrieves pending and approved leave applications."
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Reports & Metrics",
+      "item": [
+        {
+          "name": "Get Executive Summary Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reports/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["reports", "summary"]
+            },
+            "description": "Returns high-level corporate metrics, project budgets, and task completion percentages."
+          }
+        }
+      ]
+    }
+  ]
+}
