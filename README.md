@@ -6,12 +6,13 @@ An enterprise-grade, multi-tier corporate portal built with **React 18 + TypeScr
 
 ## 📋 Table of Contents
 1. [Key Features](#-key-features)
-2. [Tech Stack](#-tech-stack)
-3. [Default Login Credentials](#-default-login-credentials)
-4. [Frontend Setup & Launch](#-frontend-setup--launch)
-5. [Backend Setup & Launch](#-backend-setup--launch)
-6. [Complete Database Setup SQL Script](#-complete-database-setup-sql-script)
-7. [Complete Postman Collection JSON](#-complete-postman-collection-json)
+2. [System Flowchart](#-system-flowchart)
+3. [Tech Stack](#-tech-stack)
+4. [Default Login Credentials](#-default-login-credentials)
+5. [Frontend Setup & Launch](#-frontend-setup--launch)
+6. [Backend Setup & Launch](#-backend-setup--launch)
+7. [Complete Database Setup SQL Script](#-complete-database-setup-sql-script)
+8. [Complete Postman Collection JSON](#-complete-postman-collection-json)
 
 ---
 
@@ -23,6 +24,82 @@ An enterprise-grade, multi-tier corporate portal built with **React 18 + TypeScr
 - **Biometric Attendance & Leave Portal**: Geofenced check-in/check-out logs, automated work hours calculation, and HR leave approval workflows.
 - **Executive Analytics & PDF Reporting**: Instant PDF export, financial breakdown charts, and departmental compensation anomaly metrics.
 - **Role-Based Access Control (RBAC)**: Enforces role permissions across `ADMIN`, `MANAGER`, and `EMPLOYEE` accounts.
+
+---
+
+## 🔄 System Flowchart
+
+The diagram below illustrates the complete architecture and end-to-end flow between **Authentication**, **Employee Dossiers**, **Project Initiatives**, **Task Workflows**, **REST API Interceptors**, and the **MySQL 8.0 Database**:
+
+```mermaid
+graph TD
+    %% User & Client Layer
+    subgraph Client ["💻 1. Client Layer (React 18 + TypeScript)"]
+        User["👤 User (Admin / Employee)"]
+        LoginUI["🔐 Login Page"]
+        DashUI["📊 Dashboard / Employees / Projects / Tasks Portal"]
+        LocalStore["💾 LocalStorage (JWT Token & Schema State)"]
+        AxiosClient["🌐 Axios HTTP Client (Bearer Token Interceptor)"]
+    end
+
+    %% Security & API Gateway Layer
+    subgraph Gateway ["🛡️ 2. API Gateway & Security Layer (Spring Boot 3)"]
+        APIFilter["🔒 Spring Security JWT Authorization Filter"]
+        AuthController["🔑 Auth Controller (/api/v1/auth)"]
+        EmpController["👥 Employee Controller (/api/v1/employees)"]
+        ProjController["📁 Project Controller (/api/v1/projects)"]
+        TaskController["📋 Task Controller (/api/v1/tasks)"]
+    end
+
+    %% Service & Business Logic Layer
+    subgraph Business ["⚙️ 3. Service & Business Logic Layer"]
+        AuthService["Auth & BCrypt Password Validator"]
+        EmpService["Employee Dossier Service"]
+        ProjService["Project & Budget Management Service"]
+        TaskService["Task Kanban & Sprint Engine"]
+        JPA["Hibernate / Spring Data JPA ORM"]
+    end
+
+    %% Database Layer
+    subgraph Database ["🗄️ 4. Persistence Layer (MySQL 8.0 - smarthr_india_db)"]
+        DB_Users[("users & roles")]
+        DB_Employees[("employees & certifications")]
+        DB_Projects[("projects & assignments")]
+        DB_Tasks[("tasks & sprint items")]
+        DB_Attendance[("attendance & leaves")]
+    end
+
+    %% Authentication Flow
+    User -->|1. Enter Login Credentials| LoginUI
+    LoginUI -->|2. POST /auth/login| AuthController
+    AuthController -->|3. Verify BCrypt Hash & Credentials| AuthService
+    AuthService -->|4. Query Account Role| DB_Users
+    AuthService -->|5. Issue Signed JWT Access Token| LoginUI
+    LoginUI -->|6. Save Token & User Session| LocalStore
+
+    %% Authorized API Flow
+    User -->|7. Navigate Portal Features| DashUI
+    DashUI -->|8. Request with Authorization: Bearer Header| AxiosClient
+    AxiosClient -->|9. HTTP Request| APIFilter
+    APIFilter -->|10. Validate JWT Signature| EmpController
+    APIFilter -->|10. Validate JWT Signature| ProjController
+    APIFilter -->|10. Validate JWT Signature| TaskController
+
+    %% Controller to Service
+    EmpController -->|11. Manage Personnel Records| EmpService
+    ProjController -->|11. Track Projects & Budgets| ProjService
+    TaskController -->|11. Execute Task Kanban Workflow| TaskService
+
+    %% Service to ORM & Database
+    EmpService -->|12. JPA Entity Operations| JPA
+    ProjService -->|12. JPA Entity Operations| JPA
+    TaskService -->|12. JPA Entity Operations| JPA
+
+    JPA -->|13. SQL Query / DML Execution| DB_Employees
+    JPA -->|13. SQL Query / DML Execution| DB_Projects
+    JPA -->|13. SQL Query / DML Execution| DB_Tasks
+    JPA -->|13. SQL Query / DML Execution| DB_Attendance
+```
 
 ---
 
