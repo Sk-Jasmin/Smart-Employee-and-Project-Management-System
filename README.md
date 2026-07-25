@@ -184,68 +184,36 @@ The **Smart Employee & Project Management System** is a unified corporate manage
 The application follows a standard enterprise multi-tier architecture, separating presentation, business logic, data persistence, and database storage.
 
 ```mermaid
-graph TD
-    subgraph Client ["Client Layer (Frontend)"]
-        UI["React 19 + TypeScript Single Page App"]
-        State["Local State / Storage Service"]
-        AxiosClient["Axios HTTP Interceptor"]
+flowchart TD
+    subgraph Client ["1. Client Layer (Frontend)"]
+        UI["🖥️ React 19 + TypeScript SPA"]
+        Axios["📡 Axios HTTP Client & Interceptor"]
+        UI -->|"Sends Requests with JWT"| Axios
     end
 
-    subgraph API Gateway ["Security & Routing Layer"]
-        CORS["CorsConfig"]
-        JwtFilter["JwtAuthenticationFilter"]
-        SecConfig["Spring Security Context (Admin / Employee)"]
+    subgraph Security ["2. Security & Routing Layer"]
+        CORS["🌐 CORS Filter Configuration"]
+        JWT["🔑 JwtAuthenticationFilter"]
+        SecContext["🛡️ Spring Security Context"]
+        CORS --> JWT --> SecContext
     end
 
-    subgraph Controllers ["REST API Layer (Controllers)"]
-        AuthController["AuthController (/auth/*)"]
-        EmpController["EmployeeController (/api/employees)"]
-        ProjController["ProjectController (/api/projects)"]
-        TaskController["TaskController (/api/tasks)"]
-        DashController["DashboardController (/api/dashboard)"]
-        ReportController["ReportController (/api/reports)"]
+    subgraph Core ["3. Backend Core (REST Controllers & Business Logic)"]
+        Controllers["🔌 REST API Controllers\n(Auth, Employee, Project, Task, Dashboard, Reports)"]
+        Services["⚙️ Service Implementations & Exporters\n(Auth, Employee, Project, Task Services, PDF/Excel)"]
+        Controllers --> Services
     end
 
-    subgraph Services ["Business Logic Layer"]
-        AuthService["AuthServiceImpl"]
-        EmpService["EmployeeServiceImpl"]
-        ProjService["ProjectServiceImpl"]
-        TaskService["TaskServiceImpl"]
-        ExportUtils["ExcelExportUtil / PdfExportUtil"]
+    subgraph Database ["4. Persistence & Storage Layer"]
+        JPA["📦 Spring Data JPA Repositories"]
+        DB[("🗄️ MySQL 8.0 Database\n(smart_emp_db)")]
+        JPA -->|"SQL / JDBC via HikariCP"| DB
     end
 
-    subgraph Persistence ["Data Access Layer"]
-        JPA["Spring Data JPA Repositories"]
-    end
-
-    subgraph Database ["Database Layer"]
-        MySQL[("MySQL 8.0 Database (smart_emp_db)")]
-    end
-
-    UI --> AxiosClient
-    AxiosClient -->|"HTTP Requests with Bearer Token"| CORS
-    CORS --> JwtFilter
-    JwtFilter --> SecConfig
-    SecConfig --> AuthController
-    SecConfig --> EmpController
-    SecConfig --> ProjController
-    SecConfig --> TaskController
-    SecConfig --> DashController
-    SecConfig --> ReportController
-
-    AuthController --> AuthService
-    EmpController --> EmpService
-    ProjController --> ProjService
-    TaskController --> TaskService
-    ReportController --> ExportUtils
-    ReportController --> EmpService
-
-    AuthService --> JPA
-    EmpService --> JPA
-    ProjService --> JPA
-    TaskService --> JPA
-
-    JPA -->|"SQL Queries / JDBC"| MySQL
+    %% Layer Connections
+    Axios -->|"HTTPS Request + Bearer Token"| CORS
+    SecContext -->|"Authenticated Context"| Controllers
+    Services -->|"Data Access Operations"| JPA
 ```
 
 ### Flow Breakdown
