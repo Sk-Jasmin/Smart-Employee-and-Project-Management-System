@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Employee, Project, TaskItem, AuditLogItem } from '../types';
+import { Role, User, Employee, Project, TaskItem, AuditLogItem } from '../types';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';

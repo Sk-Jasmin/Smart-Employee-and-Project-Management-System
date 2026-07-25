@@ -1,245 +1,234 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { FormInput, FormSelect } from '../components/ui/FormInput';
-import { Badge } from '../components/ui/Badge';
-import { Settings, Sun, Moon, CheckCircle2, Palette, Sliders, Keyboard, Check, LayoutGrid } from 'lucide-react';
-import { ThemePreset } from '../types';
+import { FormSelect } from '../components/ui/FormInput';
+import { 
+  Settings, 
+  CheckCircle2, 
+  Globe, 
+  Bell, 
+  Shield, 
+  Save
+} from 'lucide-react';
+import { AppSettings } from '../types';
 
 interface SettingsPageProps {
-  darkMode: boolean;
-  setDarkMode: (val: boolean) => void;
+  darkMode?: boolean;
+  setDarkMode?: (val: boolean) => void;
 }
 
-export const SettingsPage: React.FC<SettingsPageProps> = ({ darkMode, setDarkMode }) => {
-  const [apiBaseUrl, setApiBaseUrl] = useState('/api/v1');
-  const [emailAlerts, setEmailAlerts] = useState(true);
-  const [pushAlerts, setPushAlerts] = useState(true);
-  const [timezone, setTimezone] = useState('America/New_York');
-  const [activePreset, setActivePreset] = useState<ThemePreset>('slate');
-  const [density, setDensity] = useState<'cozy' | 'compact'>('cozy');
-  const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
-  const [glassmorphism, setGlassmorphism] = useState(true);
+export const SettingsPage: React.FC<SettingsPageProps> = () => {
+  const [settings, setSettings] = useState<AppSettings>(() => {
+    const saved = localStorage.getItem('smartcorp_app_settings');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        // fallback
+      }
+    }
+    return {
+      timezone: 'America/New_York',
+      dateFormat: 'YYYY-MM-DD',
+      language: 'en-US',
+      emailAlerts: true,
+      pushAlerts: true,
+      weeklyDigest: false,
+      sessionTimeout: '30',
+      twoFactorAuth: false
+    };
+  });
+
   const [msg, setMsg] = useState('');
 
-  const themePresets: { id: ThemePreset; name: string; color: string; bg: string }[] = [
-    { id: 'slate', name: 'Dark Slate (Default)', color: '#3b82f6', bg: 'bg-slate-900' },
-    { id: 'cyber', name: 'Midnight Cyber', color: '#a855f7', bg: 'bg-zinc-950' },
-    { id: 'emerald', name: 'Emerald Corporate', color: '#10b981', bg: 'bg-emerald-950' },
-    { id: 'amber', name: 'Sunset Amber', color: '#f59e0b', bg: 'bg-amber-950' },
-    { id: 'ocean', name: 'Ocean Breeze', color: '#06b6d4', bg: 'bg-cyan-950' }
-  ];
+  const handleSelectChange = (key: keyof AppSettings, value: string | boolean) => {
+    setSettings((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    setMsg('System preferences and visual theme preset saved successfully.');
+    localStorage.setItem('smartcorp_app_settings', JSON.stringify(settings));
+    setMsg('Settings saved successfully.');
     setTimeout(() => setMsg(''), 3500);
   };
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      
       {/* Header */}
       <div>
-        <h1 className="page-title text-slate-900 dark:text-slate-100 flex items-center gap-2">
-          <Settings className="page-title-icon text-indigo-600 dark:text-indigo-400" /> Settings
+        <h1 className="page-title text-slate-900 dark:text-slate-100 flex items-center gap-2.5 text-xl sm:text-2xl font-bold">
+          <Settings className="w-7 h-7 text-indigo-600 dark:text-indigo-400" /> System Settings
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-          Customize display themes, layout density, keyboard shortcuts, and REST API configurations.
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-1 font-medium">
+          Manage regional preferences, notification alerts, and security options.
         </p>
       </div>
 
       {msg && (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-150">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> {msg}
+        <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300 rounded-xl text-sm font-semibold flex items-center gap-2.5 animate-in fade-in duration-150">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" /> {msg}
         </div>
       )}
 
-      {/* Visual Theme & Presets Card */}
-      <Card>
-        <CardHeader>
-          <span className="flex items-center gap-1.5"><Palette className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Interface Theme & Display Modes</span>
-        </CardHeader>
-        <CardBody className="p-5 space-y-6">
-          
-          <div className="flex items-center justify-between p-4 bg-slate-100/80 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-800">
-            <div>
-              <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100">Light / Dark Theme Switch</h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-medium">
-                Current active mode: <span className="font-extrabold text-indigo-600 dark:text-indigo-400 uppercase">{darkMode ? 'Dark Mode' : 'Light Mode'}</span>
-              </p>
+      <form onSubmit={handleSave} className="space-y-6">
+        {/* Regional & System Preferences */}
+        <Card>
+          <CardHeader className="py-4">
+            <span className="flex items-center gap-2 text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
+              <Globe className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Regional & System Preferences
+            </span>
+          </CardHeader>
+          <CardBody className="p-6 space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <FormSelect
+                label="System Timezone"
+                value={settings.timezone}
+                onChange={(e) => handleSelectChange('timezone', e.target.value)}
+                options={[
+                  { value: 'UTC', label: 'UTC (Coordinated Universal Time)' },
+                  { value: 'America/New_York', label: 'Eastern Time (EST / UTC-5)' },
+                  { value: 'America/Chicago', label: 'Central Time (CST / UTC-6)' },
+                  { value: 'America/Los_Angeles', label: 'Pacific Time (PST / UTC-8)' },
+                  { value: 'Europe/London', label: 'Greenwich Mean Time (GMT / UTC+0)' },
+                  { value: 'Europe/Paris', label: 'Central European Time (CET / UTC+1)' },
+                  { value: 'Asia/Kolkata', label: 'India Standard Time (IST / UTC+5:30)' },
+                  { value: 'Asia/Tokyo', label: 'Japan Standard Time (JST / UTC+9)' }
+                ]}
+              />
+
+              <FormSelect
+                label="Date Format"
+                value={settings.dateFormat}
+                onChange={(e) => handleSelectChange('dateFormat', e.target.value)}
+                options={[
+                  { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD (Standard ISO)' },
+                  { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY (UK / EU Standard)' },
+                  { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY (US Standard)' }
+                ]}
+              />
+
+              <FormSelect
+                label="Language"
+                value={settings.language}
+                onChange={(e) => handleSelectChange('language', e.target.value)}
+                options={[
+                  { value: 'en-US', label: 'English (US)' },
+                  { value: 'en-GB', label: 'English (UK)' },
+                  { value: 'es-ES', label: 'Spanish (Español)' },
+                  { value: 'fr-FR', label: 'French (Français)' },
+                  { value: 'de-DE', label: 'German (Deutsch)' }
+                ]}
+              />
             </div>
+          </CardBody>
+        </Card>
 
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 cursor-pointer transition-all duration-200 shadow-md ${
-                darkMode
-                  ? 'bg-amber-400 text-slate-950 hover:bg-amber-300 shadow-amber-500/20'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-600/20'
-              }`}
-            >
-              {darkMode ? <><Sun className="w-4 h-4 text-amber-950" /> Switch to Light Mode</> : <><Moon className="w-4 h-4 text-white" /> Switch to Dark Mode</>}
-            </button>
-          </div>
+        {/* Notification Preferences */}
+        <Card>
+          <CardHeader className="py-4">
+            <span className="flex items-center gap-2 text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
+              <Bell className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Notification Preferences
+            </span>
+          </CardHeader>
+          <CardBody className="p-6 space-y-4">
+            <div className="space-y-3.5">
+              <label className="flex items-start gap-3.5 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer transition-colors hover:bg-slate-100/80 dark:hover:bg-slate-800/60">
+                <input
+                  type="checkbox"
+                  checked={settings.emailAlerts}
+                  onChange={(e) => handleSelectChange('emailAlerts', e.target.checked)}
+                  className="mt-1 w-4.5 h-4.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100 block">Email Notifications</span>
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 block font-medium leading-relaxed">
+                    Receive email updates for leave request status changes, project milestones, and task assignments.
+                  </span>
+                </div>
+              </label>
 
-          {/* Theme Presets Grid */}
-          <div className="border-t border-slate-200/80 dark:border-slate-800 pt-4 space-y-3">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200">
-              Corporate Palette Presets
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {themePresets.map((preset) => {
-                const isActive = activePreset === preset.id;
-                return (
-                  <div
-                    key={preset.id}
-                    onClick={() => setActivePreset(preset.id)}
-                    className={`p-3 rounded-xl border-2 cursor-pointer transition-all ${
-                      isActive
-                        ? 'border-indigo-600 bg-indigo-50/70 dark:bg-slate-800/90 shadow-xs'
-                        : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-xs text-slate-900 dark:text-slate-100">{preset.name}</span>
-                      {isActive && <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
-                    </div>
-                    <div className="mt-2.5 flex items-center gap-1.5">
-                      <span className="w-4 h-4 rounded-full border border-slate-300 dark:border-white/20" style={{ backgroundColor: preset.color }} />
-                      <span className={`h-4 flex-1 rounded ${preset.bg}`} />
-                    </div>
-                  </div>
-                );
-              })}
+              <label className="flex items-start gap-3.5 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer transition-colors hover:bg-slate-100/80 dark:hover:bg-slate-800/60">
+                <input
+                  type="checkbox"
+                  checked={settings.pushAlerts}
+                  onChange={(e) => handleSelectChange('pushAlerts', e.target.checked)}
+                  className="mt-1 w-4.5 h-4.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100 block">Browser Push Notifications</span>
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 block font-medium leading-relaxed">
+                    Enable desktop notifications for instant alerts on urgent company announcements and reminders.
+                  </span>
+                </div>
+              </label>
+
+              <label className="flex items-start gap-3.5 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer transition-colors hover:bg-slate-100/80 dark:hover:bg-slate-800/60">
+                <input
+                  type="checkbox"
+                  checked={settings.weeklyDigest}
+                  onChange={(e) => handleSelectChange('weeklyDigest', e.target.checked)}
+                  className="mt-1 w-4.5 h-4.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100 block">Weekly Performance Summary</span>
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 block font-medium leading-relaxed">
+                    Receive a weekly summary email detailing team attendance metrics and project completion stats.
+                  </span>
+                </div>
+              </label>
             </div>
-          </div>
+          </CardBody>
+        </Card>
 
-          {/* Density & Font Controls */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-slate-200/80 dark:border-slate-800 pt-4">
-            <div className="space-y-2">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                Layout Density
-              </h4>
-              <div className="flex items-center gap-2 text-xs">
-                <button
-                  type="button"
-                  onClick={() => setDensity('cozy')}
-                  className={`flex-1 py-2 px-3 rounded-lg border font-bold transition-colors cursor-pointer ${
-                    density === 'cozy'
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                      : 'border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200'
-                  }`}
-                >
-                  Cozy (Standard)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDensity('compact')}
-                  className={`flex-1 py-2 px-3 rounded-lg border font-bold transition-colors cursor-pointer ${
-                    density === 'compact'
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                      : 'border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200'
-                  }`}
-                >
-                  Compact Tally
-                </button>
+        {/* Security & Session Management */}
+        <Card>
+          <CardHeader className="py-4">
+            <span className="flex items-center gap-2 text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
+              <Shield className="w-5 h-5 text-indigo-600 dark:text-indigo-400" /> Security & Session Settings
+            </span>
+          </CardHeader>
+          <CardBody className="p-6 space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <FormSelect
+                label="Automatic Session Timeout"
+                value={settings.sessionTimeout}
+                onChange={(e) => handleSelectChange('sessionTimeout', e.target.value)}
+                options={[
+                  { value: '15', label: '15 Minutes of Inactivity' },
+                  { value: '30', label: '30 Minutes of Inactivity' },
+                  { value: '60', label: '1 Hour of Inactivity' },
+                  { value: '240', label: '4 Hours of Inactivity' },
+                  { value: '0', label: 'Never (Not Recommended)' }
+                ]}
+              />
+
+              <div className="space-y-1.5">
+                <label className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1.5">
+                  Two-Factor Authentication (2FA)
+                </label>
+                <label className="flex items-center gap-3.5 p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings.twoFactorAuth}
+                    onChange={(e) => handleSelectChange('twoFactorAuth', e.target.checked)}
+                    className="w-4.5 h-4.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <span className="font-semibold text-sm sm:text-base text-slate-900 dark:text-slate-100">
+                    Require 2FA verification for administrator logins
+                  </span>
+                </label>
               </div>
             </div>
+          </CardBody>
+        </Card>
 
-            <div className="space-y-2">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                Glassmorphism Blur Effect
-              </h4>
-              <label className="flex items-center gap-3 p-2.5 bg-slate-100/70 dark:bg-slate-800/40 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer text-xs">
-                <input
-                  type="checkbox"
-                  checked={glassmorphism}
-                  onChange={(e) => setGlassmorphism(e.target.checked)}
-                  className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <span className="font-semibold text-slate-800 dark:text-slate-200">Enable backdrop blur on navbar & card overlays</span>
-              </label>
-            </div>
-          </div>
-
-        </CardBody>
-      </Card>
-
-      {/* Keyboard Shortcuts Info */}
-      <Card>
-        <CardHeader>
-          <span className="flex items-center gap-1.5"><Keyboard className="w-4 h-4 text-emerald-600" /> Keyboard Shortcuts Engine</span>
-        </CardHeader>
-        <CardBody className="p-4 flex items-center justify-between text-xs">
-          <div>
-            <p className="font-bold text-slate-900 dark:text-slate-100">Global Keyboard Shortcuts Active</p>
-            <p className="text-slate-500 text-[11px] mt-0.5">Press <kbd className="font-mono font-bold bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded">Ctrl+K</kbd> to open Global Search, <kbd className="font-mono font-bold bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded">Ctrl+B</kbd> for Bookmarks, or <kbd className="font-mono font-bold bg-slate-200 dark:bg-slate-800 px-1 py-0.5 rounded">?</kbd> for help.</p>
-          </div>
-          <Badge variant="green">Active</Badge>
-        </CardBody>
-      </Card>
-
-      {/* API & Backend Config Card */}
-      <Card>
-        <CardHeader>
-          Backend Gateway & Dispatch Settings
-        </CardHeader>
-        <CardBody className="p-5 space-y-4">
-          <form onSubmit={handleSave} className="space-y-4">
-            <FormInput
-              label="Backend REST API Gateway Base URL"
-              value={apiBaseUrl}
-              onChange={(e) => setApiBaseUrl(e.target.value)}
-              helperText="Axios HTTP client routes all REST requests through this gateway."
-            />
-
-            <FormSelect
-              label="Default System Timezone"
-              value={timezone}
-              onChange={(e) => setTimezone(e.target.value)}
-              options={[
-                { value: 'America/New_York', label: 'Eastern Standard Time (EST / UTC-5)' },
-                { value: 'America/Chicago', label: 'Central Standard Time (CST / UTC-6)' },
-                { value: 'America/Los_Angeles', label: 'Pacific Standard Time (PST / UTC-8)' },
-                { value: 'Europe/London', label: 'Greenwich Mean Time (GMT / UTC+0)' }
-              ]}
-            />
-
-            <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-3">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                Notification Preferences
-              </h4>
-
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-800 dark:text-slate-200">
-                <input
-                  type="checkbox"
-                  checked={emailAlerts}
-                  onChange={(e) => setEmailAlerts(e.target.checked)}
-                  className="rounded border-slate-300 text-blue-700 focus:ring-blue-500"
-                />
-                <span>Send automated emails for leave approvals & task assignments</span>
-              </label>
-
-              <label className="flex items-center gap-3 cursor-pointer text-xs text-slate-800 dark:text-slate-200">
-                <input
-                  type="checkbox"
-                  checked={pushAlerts}
-                  onChange={(e) => setPushAlerts(e.target.checked)}
-                  className="rounded border-slate-300 text-blue-700 focus:ring-blue-500"
-                />
-                <span>Enable desktop browser push notifications for announcements</span>
-              </label>
-            </div>
-
-            <div className="flex justify-end pt-3">
-              <Button type="submit" variant="primary" className="bg-blue-700 hover:bg-blue-800">
-                Save Preferences
-              </Button>
-            </div>
-          </form>
-        </CardBody>
-      </Card>
-
+        {/* Save Button */}
+        <div className="flex justify-end pt-2">
+          <Button type="submit" variant="primary" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm sm:text-base py-2.5 px-6 flex items-center gap-2">
+            <Save className="w-5 h-5" /> Save Settings
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -81,12 +81,14 @@ export interface TaskItem {
 export interface AttendanceRecord {
   id: number;
   employeeId: number;
-  employeeName: string;
+  employeeName?: string;
   date: string;
   checkIn: string;
   checkOut: string;
   status: 'PRESENT' | 'ABSENT' | 'LATE' | 'HALF_DAY' | 'ON_LEAVE';
-  workHours: number;
+  workHours?: number;
+  totalHours?: string | number;
+  overtimeHours?: string | number;
   remarks?: string;
 }
 
@@ -100,12 +102,13 @@ export interface LeaveRequestItem {
   leaveType: LeaveType;
   startDate: string;
   endDate: string;
-  totalDays: number;
+  totalDays?: number;
   reason: string;
   status: LeaveStatus;
   approvedBy?: string;
   adminRemarks?: string;
-  createdAt: string;
+  createdAt?: string;
+  appliedDate?: string;
 }
 
 export interface Announcement {
@@ -113,24 +116,26 @@ export interface Announcement {
   title: string;
   content: string;
   priority: 'NORMAL' | 'HIGH' | 'URGENT';
-  createdBy: string;
+  createdBy?: string;
   createdAt: string;
+  postedBy?: string;
 }
 
 export interface AuditLogItem {
   id: number;
-  username: string;
+  username?: string;
   action: string;
-  entityName: string;
-  entityId: number;
+  entityName?: string;
+  entityId?: number;
   ipAddress: string;
   details: string;
   timestamp: string;
+  performedBy?: string;
 }
 
 export interface NotificationItem {
   id: number;
-  recipientUsername: string;
+  recipientUsername?: string;
   title: string;
   message: string;
   type: 'TASK_ASSIGNED' | 'LEAVE_UPDATE' | 'ANNOUNCEMENT' | 'SYSTEM';
@@ -189,11 +194,13 @@ export interface ProductivityMetrics {
   focusHours: number;
 }
 
-export type ThemePreset = 'slate' | 'cyber' | 'emerald' | 'amber' | 'ocean';
-
-export interface ThemeConfig {
-  preset: ThemePreset;
-  density: 'compact' | 'cozy';
-  fontSize: 'sm' | 'md' | 'lg';
-  glassmorphism: boolean;
+export interface AppSettings {
+  timezone: string;
+  dateFormat: string;
+  language: string;
+  emailAlerts: boolean;
+  pushAlerts: boolean;
+  weeklyDigest: boolean;
+  sessionTimeout: string;
+  twoFactorAuth: boolean;
 }

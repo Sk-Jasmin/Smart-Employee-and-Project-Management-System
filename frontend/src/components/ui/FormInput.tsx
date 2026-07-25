@@ -2,19 +2,20 @@ import React from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  labelClassName?: string;
   error?: string;
   helperText?: string;
   icon?: React.ReactNode;
 }
 
 export const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, icon, className = '', id, ...props }, ref) => {
+  ({ label, labelClassName = '', error, helperText, icon, className = '', id, ...props }, ref) => {
     const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
 
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="block text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1">
+          <label htmlFor={inputId} className={`block text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1.5 ${labelClassName}`}>
             {label}
           </label>
         )}
@@ -35,8 +36,8 @@ export const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
               paddingLeft: icon ? '3rem' : '0.75rem',
               ...props.style 
             }}
-            className={`w-full py-2 text-sm bg-white dark:bg-slate-900 border rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-colors font-medium ${
-              icon ? 'pr-3 pl-12' : 'px-3'
+            className={`w-full py-2.5 text-sm sm:text-base bg-white dark:bg-slate-900 border rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-colors font-medium ${
+              icon ? 'pr-3 pl-12' : 'px-3.5'
             } ${
               error
                 ? 'border-red-500 dark:border-red-500'
@@ -44,8 +45,8 @@ export const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
             } ${className}`}
           />
         </div>
-        {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400 font-medium">{error}</p>}
-        {helperText && !error && <p className="mt-1 text-xs text-slate-600 dark:text-slate-400 font-medium">{helperText}</p>}
+        {error && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>}
+        {helperText && !error && <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">{helperText}</p>}
       </div>
     );
   }
@@ -54,25 +55,26 @@ FormInput.displayName = 'FormInput';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
+  labelClassName?: string;
   error?: string;
   options: { value: string | number; label: string }[];
 }
 
 export const FormSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, error, options, className = '', id, ...props }, ref) => {
+  ({ label, labelClassName = '', error, options, className = '', id, ...props }, ref) => {
     const selectId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
 
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={selectId} className="block text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1">
+          <label htmlFor={selectId} className={`block text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 mb-1.5 ${labelClassName}`}>
             {label}
           </label>
         )}
         <select
           ref={ref}
           id={selectId}
-          className={`w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-colors font-medium ${
+          className={`w-full px-3.5 py-2.5 text-sm sm:text-base bg-white dark:bg-slate-900 border rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-colors font-medium ${
             error
               ? 'border-red-500 dark:border-red-500'
               : 'border-slate-300 dark:border-slate-700'
@@ -85,7 +87,7 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
             </option>
           ))}
         </select>
-        {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400 font-medium">{error}</p>}
+        {error && <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>}
       </div>
     );
   }

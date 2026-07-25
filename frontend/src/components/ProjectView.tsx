@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Project, Employee, Role, Priority, ProjectStatus } from '../types';
+import { Project, Employee, Role, Priority, ProjectStatus, TaskItem } from '../types';
 import { 
   FolderKanban, 
   Plus, 

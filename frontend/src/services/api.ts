@@ -446,7 +446,7 @@ class MockBackendService {
     return newRecord;
   }
 
-  async recordCheckIn(employeeId: number = 1): Promise<AttendanceRecord> {
+  async recordCheckIn(employeeId: number = 1, employeeName?: string): Promise<AttendanceRecord> {
     return this.clockIn(employeeId);
   }
 
@@ -487,8 +487,10 @@ class MockBackendService {
       leaveType: data.leaveType || 'CASUAL',
       startDate: data.startDate || new Date().toISOString().split('T')[0],
       endDate: data.endDate || new Date().toISOString().split('T')[0],
+      totalDays: data.totalDays || 1,
       reason: data.reason || 'Personal reasons',
       status: 'PENDING',
+      createdAt: new Date().toISOString().split('T')[0],
       appliedDate: new Date().toISOString().split('T')[0]
     };
     this.leaves.unshift(newLeave);
@@ -496,11 +498,13 @@ class MockBackendService {
     return newLeave;
   }
 
-  async updateLeaveStatus(id: number, status: 'APPROVED' | 'REJECTED'): Promise<LeaveRequestItem> {
+  async updateLeaveStatus(id: number, status: 'APPROVED' | 'REJECTED', approvedBy?: string, adminRemarks?: string): Promise<LeaveRequestItem> {
     await this.delay();
     const index = this.leaves.findIndex((l) => l.id === id);
     if (index === -1) throw new Error('Leave request not found.');
     this.leaves[index].status = status;
+    if (approvedBy) this.leaves[index].approvedBy = approvedBy;
+    if (adminRemarks) this.leaves[index].adminRemarks = adminRemarks;
     this.setStorage('db_leaves', this.leaves);
     return this.leaves[index];
   }
